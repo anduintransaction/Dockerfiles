@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -yq \
     curl \
     supervisor \
     git \
+    libfontconfig \
     --no-install-recommends
 
 # Clean up APT when done.
