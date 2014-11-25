@@ -1,5 +1,5 @@
 # Based on https://github.com/klaemo/docker-couchdb
-FROM debian/wheezy
+FROM debian:wheezy
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 # avoid interactive dialoges from apt:
