@@ -5,6 +5,10 @@ MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 # avoid interactive dialoges from apt:
 ENV DEBIAN_FRONTEND noninteractive
 
+# Repositories
+RUN echo 'deb http://http.debian.net/debian wheezy-backports main' > /etc/apt/sources.list.d/wheezy-backports.list
+RUN apt-get update -q
+
 # Install prereqs
 RUN apt-get update && apt-get --no-install-recommends -y install \
   build-essential \
@@ -15,6 +19,7 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
   erlang-nox \
   git \
   libicu-dev \
+  nodejs \
   libmozjs185-dev
 RUN apt-get --no-install-recommends -y install \
   erlang-reltool
@@ -50,6 +55,7 @@ RUN make
 USER root
 RUN mkdir -p /opt/couchdb
 RUN chown -R couchdb.couchdb /opt/couchdb
+RUN npm install -g grunt-cli
 USER couchdb
 RUN make install
 RUN git log > /opt/couchdb/.git.log
