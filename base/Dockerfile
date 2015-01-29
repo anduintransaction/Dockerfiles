@@ -4,6 +4,8 @@ MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 # avoid interactive dialoges from apt:
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN groupadd -r anduin && useradd -g anduin anduin
+
 # install essential tools
 RUN apt-get update && apt-get install -yq \
     ca-certificates \
