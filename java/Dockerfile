@@ -1,4 +1,4 @@
-FROM anduin/base:latest
+FROM anduin/base:0.3.1
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 # avoid interactive dialoges from apt:
