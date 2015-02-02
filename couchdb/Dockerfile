@@ -9,7 +9,7 @@ RUN add-apt-repository ppa:couchdb/stable && \
   && apt-get install -y --no-install-recommends \
   couchdb rebar
 
-RUN mkdir -p /usr/local/lib/couchdb/plugins \
+RUN mkdir -p /usr/local/lib/couchdb/plugins && \
     chown -R couchdb:couchdb \
     /usr/local/lib/couchdb /usr/local/etc/couchdb \
     /usr/local/var/lib/couchdb /usr/local/var/log/couchdb /usr/local/var/run/couchdb \
