@@ -10,7 +10,7 @@ RUN apt-get update -y \
     build-essential git rebar
 
 # install plugins
-RUN mkdir -p /usr/local/lib/couchdb/plugins && \
+RUN mkdir -p /usr/local/lib/couchdb/plugins/couchperuser && \
     git clone https://github.com/etrepum/couchperuser.git /usr/local/lib/couchdb/plugins &&\
     cd /usr/local/lib/couchdb/plugins &&\
     make
