@@ -2,6 +2,9 @@
 FROM klaemo/couchdb
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
+RUN echo "deb http://http.debian.net/debian wheezy-backports main" >> /etc/apt/sources.list
+RUN apt-get -qq update
+
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends \
     build-essential git rebar
