@@ -11,8 +11,8 @@ RUN apt-get update -y \
 
 # install plugins
 RUN mkdir -p /usr/local/lib/couchdb/plugins && \
-    git clone https://github.com/etrepum/couchperuser.git /usr/local/lib/couchdb/plugins &&\
-    cd /usr/local/lib/couchdb/plugins/couchperuser &&\
+    git clone https://github.com/etrepum/couchperuser.git /usr/local/lib/couchdb/plugins/couchperuser &&\
+    cd /usr/local/lib/couchdb/plugins/couchperuser && \
     make
 
 # Clean up APT when done.
