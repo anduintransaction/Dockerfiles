@@ -49,7 +49,7 @@ ADD config/td-agent.conf /etc/td-agent/td-agent.conf
 # 8080:80       -- apache server
 # 9200:9200     -- ElasticSearch
 # 42185:42185   -- fluent port for rsyslog
-EXPOSE 4001 7001 80 9200 42185
+EXPOSE 4001 7001 80 9200 42185/udp
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
