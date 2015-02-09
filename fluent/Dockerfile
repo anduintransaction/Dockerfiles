@@ -71,7 +71,8 @@ RUN cd /tmp; \
       echo "deb [arch=amd64] http://packages.treasuredata.com/2/ubuntu/trusty/ trusty contrib" > /etc/apt/sources.list.d/treasure-data.list; \
       apt-get update; \
       apt-get install -y --force-yes td-agent libcurl4-gnutls-dev; \
-      /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+      /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch; \
+      /usr/sbin/td-agent-gem install fluent-plugin-record-reformer
 
 ADD config/td-agent.conf /etc/td-agent/td-agent.conf
 
