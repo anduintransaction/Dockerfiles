@@ -7,7 +7,11 @@ Docker image for ElasticSearch - Kibana.  Link this an instance of this containe
 `sudo docker build -t anduin/es_kibana .`
 
 ## Run instance
-`sudo docker run --name es_kibana -p 8080:80 -d anduin/es_kibana `
+(We need to make sure that the log_data container exists)
+
+`sudo docker run --name es_kibana \
+    --volumes-from log_data \
+    -p 8080:80 -p 9200:9200 -d anduin/es_kibana`
 
 ## Access Kibana:
 `http://server_adress:8080`

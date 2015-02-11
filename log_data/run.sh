@@ -1,0 +1,1 @@
+sudo docker run --name log_data anduin/log_data
