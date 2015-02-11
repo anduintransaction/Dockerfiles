@@ -1,4 +1,4 @@
-Fluent
+ES - KIBANA
 =========
 
 Docker image for ElasticSearch - Kibana.  Link this an instance of this container to the fluentd container.
