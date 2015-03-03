@@ -32,7 +32,6 @@ RUN cd /tmp; \
       mv kibana-3.0.0milestone5 kibana; \
       mv kibana /var/www/site
 
-ADD config/kibana/config.js /var/www/site/config.js
 
 # 8080:80       -- apache server
 # 9200:9200     -- ElasticSearch - Link to fluentd
@@ -42,5 +41,7 @@ EXPOSE 80 9200
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD config/supervisord.conf /etc/supervisor/supervisord.conf
+ADD config/kibana/config.js /var/www/site/config.js
+ADD config/kibana/default.json /var/www/site/app/dashboards/default.json
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
