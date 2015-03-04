@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.9.16
 MAINTAINER Cuong Pham "cuongpham@anduintransact.com"
 
-VOLUME /opt/elasticsearch/data
+VOLUME /mnt/elasticsearch/data
 
 CMD ["true"]
