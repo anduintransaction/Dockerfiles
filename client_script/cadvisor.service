@@ -1,0 +1,24 @@
+[Unit]
+Description=Google Container Advisor
+Requires=docker.socket
+After=docker.socket
+
+[Service]
+ExecStartPre=/bin/sh -c "docker history logbase/cadvisor-influxdb:latest >/dev/null || docker pull logbase/cadvisor-influxdb:latest"
+ExecStart=/bin/sh -c ' \
+    sudo docker run \
+        --volume=/:/rootfs:ro \
+        --volume=/var/run:/var/run:rw \
+        --volume=/sys:/sys:ro \
+        --volume=/var/lib/docker/:/var/lib/docker:ro \
+        --publish=8080:8080 \
+        --detach=true \
+        --name=cadvisor \
+        -e RUN_OPTS="-storage_driver=influxdb -storage_driver_host=52.0.110.234:8086" \
+        logbase/cadvisor-influxdb'
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true

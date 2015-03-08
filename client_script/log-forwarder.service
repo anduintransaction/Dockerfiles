@@ -1,0 +1,21 @@
+[Unit]
+Description=Log forwarder
+
+[Service]
+ExecStart=/bin/sh -c '\
+  while true; do \
+    FLUENTD_ADDR=`etcdctl get /log_server/fluentd/host`; \
+    FLUENTD_PORT=`etcdctl get /log_server/fluentd/syslog_port`; \
+    if [ "$?" = "0" ]; then \
+        journalctl -o short -f | ncat -u $FLUENTD_ADDR $FLUENTD_PORT; \
+    else \
+        echo "No fluentd setting found in etcdctl. Waiting 60s..."; \
+    fi; \
+    sleep 60; \
+  done'
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
