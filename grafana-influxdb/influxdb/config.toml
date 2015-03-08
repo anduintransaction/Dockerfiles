@@ -10,7 +10,7 @@ bind-address = "0.0.0.0"
 [logging]
 # logging level can be one of "debug", "info", "warn" or "error"
 level  = "info"
-file   = "/var/log/easydeploy/influxdb.log"         # stdout to log to standard out
+file   = "/mnt/log/easydeploy/influxdb.log"         # stdout to log to standard out
 
 # Configure the admin server
 [admin]
@@ -44,12 +44,12 @@ read-timeout = "5s"
 port = 8090
 
 # Where the raft logs are stored. The user running InfluxDB will need read/write access.
-dir  = "/var/easydeploy/share/raft"
+dir  = "/mnt/easydeploy/share/raft"
 
 # election-timeout = "1s"
 
 [storage]
-dir = "/var/easydeploy/share/db"
+dir = "/mnt/easydeploy/share/db"
 # How many requests to potentially buffer in memory. If the buffer gets filled then writes
 # will still be logged and once the local storage has caught up (or compacted) the writes
 # will be replayed from the WAL
@@ -155,7 +155,7 @@ point-batch-size = 100
 
 [wal]
 
-dir   = "/var/easydeploy/share/wal"
+dir   = "/mnt/easydeploy/share/wal"
 flush-after = 1000 # the number of writes after which wal will be flushed, 0 for flushing on every write
 bookmark-after = 1000 # the number of writes after which a bookmark will be created
 
