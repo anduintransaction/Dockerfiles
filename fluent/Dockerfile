@@ -17,6 +17,7 @@ RUN cd /tmp; \
       /usr/sbin/td-agent-gem install fluent-plugin-record-reformer
 
 ADD config/td-agent.conf /etc/td-agent/td-agent.conf
+ADD config/td-agent-influxdb.conf /etc/td-agent/td-agent-influxdb.conf
 
 # RUN echo 'export ES_ADDR=$ESK_PORT_9200_TCP_ADDR' >> /etc/default/td-agent
 

@@ -13,7 +13,9 @@ sed -i -e "s/<--DATA_USER-->/${INFLUXDB_DATA_USER}/g" \
 		-e "s/<--GRAFANA_PW-->/${INFLUXDB_GRAFANA_PW}/g" \
  		-e "s/<--CADVISOR_USER-->/${CADVISOR_USER}/g" \
 		-e "s/<--CADVISOR_PW-->/${CADVISOR_PW}/g" /src/grafana/config.js
-    
+
+sed -i -e "s/<--INFLUXDB_ADDR-->/${INFLUXDB_ADDR}/g" /src/grafana/config.js
+
 touch /.grafana_configured
 
 echo "=> Grafana has been configured as follows:"

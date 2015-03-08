@@ -21,13 +21,19 @@ define(['settings'], function(Settings) {
       datasources: {
         data: {
           type: 'influxdb',
-          url: "http://localhost:8086/db/data",
+          url: "http://<--INFLUXDB_ADDR-->:8086/db/data",
           username: '<--DATA_USER-->',
           password: '<--DATA_PW-->',
         },
+        cadvisor: {
+          type: 'influxdb',
+          url: "http://<--INFLUXDB_ADDR-->:8086/db/grafana",
+          username: '<--CADVISOR_USER-->',
+          password: '<--CADVISOR_PW-->',
+        },
         grafana: {
           type: 'influxdb',
-          url: "http://localhost:8086/db/grafana",
+          url: "http://<--INFLUXDB_ADDR-->:8086/db/grafana",
           username: '<--GRAFANA_USER-->',
           password: '<--GRAFANA_PW-->',
           grafanaDB: true

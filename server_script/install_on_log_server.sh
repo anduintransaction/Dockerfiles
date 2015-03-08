@@ -1,8 +1,9 @@
 #!/bin/bash
+INFLUXDB_ADDR=52.0.110.234
 
 # data only docker
-#sudo docker pull anduin/log_data
-#sudo docker run --name log_data -v /mnt/elasticsearch/data:/mnt/elasticsearch/data anduin/log_data
+sudo docker pull anduin/log_data
+sudo docker run --name log_data -v /mnt/elasticsearch/data:/mnt/elasticsearch/data anduin/log_data
 
 # ElasticSearch Kibana
 sudo docker pull anduin/es_kibana
@@ -16,8 +17,9 @@ curl -XPUT http://${ESK_ADDR}:9200/_template/logstash -d@es_kibana/config/kibana
 
 # InfluxDB and Grafana
 sudo docker pull anduin/grafana-influxdb
-sudo docker run -d -v /etc/localtime:/etc/localtime:ro 
-	-p 80:80 -p 8083:8083 -p 8084:8084 -p 8086:8086 
+sudo docker run -d -v /etc/localtime:/etc/localtime:ro \
+	-p 80:80 -p 8083:8083 -p 8084:8084 -p 8086:8086 \
+	-e INFLUXDB_ADDR=$INFLUXDB_ADDR
 	--name grafana-influxdb anduin/grafana_influxdb
 
 # Fluentd
