@@ -27,7 +27,7 @@ define(['settings'], function(Settings) {
         },
         cadvisor: {
           type: 'influxdb',
-          url: "http://<--INFLUXDB_ADDR-->:8086/db/grafana",
+          url: "http://<--INFLUXDB_ADDR-->:8086/db/cadvisor",
           username: '<--CADVISOR_USER-->',
           password: '<--CADVISOR_PW-->',
         },

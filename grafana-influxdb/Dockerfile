@@ -7,7 +7,7 @@ ENV INFLUXDB_VERSION 0.8.8
 ENV DEBIAN_FRONTEND noninteractive
 
 #RUN		echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty universe' >> /etc/apt/sources.list
-RUN		apt-get -y update && apt-get -y upgrade
+RUN		apt-get -y update && apt-get -y upgrade && apt-get -y install
 
 # ---------------- #
 #   Installation   #
@@ -39,7 +39,7 @@ ADD		influxdb/config.toml /etc/influxdb/config.toml
 ADD		influxdb/run.sh /usr/local/bin/run_influxdb
 RUN		chmod +x /usr/local/bin/run_influxdb
 # These two databases have to be created. These variables are used by set_influxdb.sh and set_grafana.sh
-ENV		PRE_CREATE_DB data grafana
+ENV		PRE_CREATE_DB data grafana cadvisor
 ENV		INFLUXDB_DATA_USER data
 ENV		INFLUXDB_DATA_PW data
 ENV		INFLUXDB_GRAFANA_USER grafana
@@ -50,12 +50,12 @@ ENV		ROOT_PW root
 
 # Configure Grafana
 ADD		./grafana/config.js /src/grafana/config.js
-#ADD	./grafana/scripted.json /src/grafana/app/dashboards/default.json
+ADD	./grafana/default.json /src/grafana/app/dashboards/default.json
 
 ADD		./configure.sh /configure.sh
 ADD		./set_grafana.sh /set_grafana.sh
 ADD		./set_influxdb.sh /set_influxdb.sh
-RUN		chmod +x /*.sh && ./configure.sh
+RUN		chmod +x /*.sh
 
 # Configure nginx and supervisord
 ADD		./nginx/nginx.conf /etc/nginx/nginx.conf
@@ -65,9 +65,9 @@ ADD		./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 #   Cleanup   #
 # ----------- #
 
-RUN		apt-get autoremove -y wget curl && \
+RUN		apt-get autoremove -y wget && \
 			apt-get -y clean && \
-			rm -rf /var/lib/apt/lists/* && rm /*.sh
+			rm -rf /var/lib/apt/lists/*
 
 # ---------------- #
 #   Expose Ports   #

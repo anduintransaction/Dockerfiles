@@ -1,0 +1,599 @@
+{
+  "id": null,
+  "title": "Anduin Cluster Resource Monitoring",
+  "originalTitle": "Anduin Cluster Resource Monitoring",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "title": "test",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "id": 4,
+          "span": 6,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "individual",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "max",
+              "column": "memory_usage",
+              "series": "stats",
+              "query": "select machine, max(memory_usage) from \"stats\" where $timeFilter group by time($interval), machine order asc",
+              "interval": "10s",
+              "groupby_field": "machine"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Memory Usage per Machine",
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Memory Usage per Container",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 6,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "max",
+              "column": "memory_usage",
+              "series": "stats",
+              "query": "select container_name, max(memory_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "interval": "10s",
+              "groupby_field": "container_name"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ]
+    },
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "CPU Usage per Machine",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 5,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "max",
+              "column": "cpu_cumulative_usage",
+              "series": "stats",
+              "query": "select machine, max(cpu_cumulative_usage) from \"stats\" where $timeFilter group by time($interval), machine order asc",
+              "interval": "10s",
+              "groupby_field": "machine"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "CPU Usage per Container",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 7,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "max",
+              "column": "cpu_cumulative_usage",
+              "series": "stats",
+              "query": "select container_name, max(cpu_cumulative_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "interval": "10s",
+              "groupby_field": "container_name"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ]
+    },
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Tx/Machine",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 8,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "sum",
+              "column": "tx_bytes",
+              "series": "stats",
+              "query": "select machine, sum(tx_bytes) from \"stats\" where $timeFilter group by time($interval), machine order asc",
+              "interval": "",
+              "groupby_field": "machine"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "Tx/Container",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 9,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "sum",
+              "column": "tx_bytes",
+              "series": "stats",
+              "query": "select container_name, sum(tx_bytes) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "interval": "",
+              "groupby_field": "container_name"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ]
+    },
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Rx/Machine",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 10,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "sum",
+              "column": "rx_bytes",
+              "series": "stats",
+              "query": "select machine, sum(rx_bytes) from \"stats\" where $timeFilter group by time($interval), machine order asc",
+              "interval": "",
+              "groupby_field": "machine"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "RX/Container",
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "id": 11,
+          "datasource": "cadvisor",
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bits",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "sum",
+              "column": "rx_bytes",
+              "series": "stats",
+              "query": "select container_name, sum(rx_bytes) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "interval": "",
+              "groupby_field": "container_name"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ]
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true,
+      "notice": false
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  },
+  "version": 6,
+  "hideAllLegends": false
+}

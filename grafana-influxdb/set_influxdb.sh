@@ -44,8 +44,8 @@ echo "=> About to create the following database: ${PRE_CREATE_DB}"
 if [ -f "/.influxdb_configured" ]; then
     echo "=> Database had been created before, skipping ..."
 else
-    echo "=> Starting InfluxDB ..."
-    exec /usr/bin/influxdb -config=${CONFIG_FILE} &
+#    echo "=> Starting InfluxDB ..."
+#    exec /usr/bin/influxdb -config=${CONFIG_FILE} &
     arr=$(echo ${PRE_CREATE_DB} | tr ";" "\n")
 
     #wait for the startup of influxdb
@@ -67,6 +67,8 @@ else
     
     echo "=> Creating User for database: data"
     curl -s -k -X POST -d "{\"name\":\"${INFLUXDB_DATA_USER}\",\"password\":\"${INFLUXDB_DATA_PW}\"}" $(echo ${API_URL}'/db/data/users?u=root&p=root')
+    echo "=> Creating User for database: cadvisor"
+    curl -s -k -X POST -d "{\"name\":\"${CADVISOR_USER}\",\"password\":\"${CADVISOR_PW}\"}" $(echo ${API_URL}'/db/cadvisor/users?u=root&p=root')
     echo "=> Creating User for database: grafana"
     curl -s -k -X POST -d "{\"name\":\"${INFLUXDB_GRAFANA_USER}\",\"password\":\"${INFLUXDB_GRAFANA_PW}\"}" $(echo ${API_URL}'/db/grafana/users?u=root&p=root')
     echo ""

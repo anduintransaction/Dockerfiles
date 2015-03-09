@@ -4,18 +4,9 @@ Requires=docker.socket
 After=docker.socket
 
 [Service]
-ExecStartPre=/bin/sh -c "docker history logbase/cadvisor-influxdb:latest >/dev/null || docker pull logbase/cadvisor-influxdb:latest"
-ExecStart=/bin/sh -c ' \
-    sudo docker run \
-        --volume=/:/rootfs:ro \
-        --volume=/var/run:/var/run:rw \
-        --volume=/sys:/sys:ro \
-        --volume=/var/lib/docker/:/var/lib/docker:ro \
-        --publish=8080:8080 \
-        --detach=true \
-        --name=cadvisor \
-        -e RUN_OPTS="-storage_driver=influxdb -storage_driver_host=52.0.110.234:8086" \
-        logbase/cadvisor-influxdb'
+ExecStartPre=/bin/sh -c "docker history google/cadvisor:latest >/dev/null || docker pull google/cadvisor:latest"
+ExecStart=/usr/bin/docker run --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker/:/var/lib/docker:ro --publish=8080:8080 --name=cadvisor google/cadvisor:latest -storage_driver=influxdb -storage_driver_host=52.0.110.234:8086
+ExecStopPost=-/usr/bin/docker rm -f cadvisor
 
 [Install]
 WantedBy=multi-user.target
