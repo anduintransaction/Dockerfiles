@@ -1,0 +1,4 @@
+#! /bin/bash
+
+docker rmi -f anduin/nginx_proxy
+docker build -t anduin/nginx_proxy .

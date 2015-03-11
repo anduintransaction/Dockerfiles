@@ -7,7 +7,6 @@ ENV INFLUXDB_VERSION 0.8.8
 # Prevent some error messages
 ENV DEBIAN_FRONTEND noninteractive
 
-#RUN		echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty universe' >> /etc/apt/sources.list
 RUN		apt-get -y update && apt-get -y upgrade && apt-get -y install
 
 # ---------------- #
@@ -34,7 +33,9 @@ RUN		wget http://s3.amazonaws.com/influxdb/influxdb_${INFLUXDB_VERSION}_amd64.de
 ADD		influxdb/config.toml /etc/influxdb/config.toml 
 ADD		influxdb/run.sh /usr/local/bin/run_influxdb
 RUN		chmod +x /usr/local/bin/run_influxdb
-# These two databases have to be created. These variables are used by set_influxdb.sh and set_grafana.sh
+
+# These three databases have to be created. These variables are used by set_influxdb.sh and set_grafana.sh
+# These variables should be overwritten at 'docker run'!!!
 ENV		PRE_CREATE_DB data grafana cadvisor
 ENV		INFLUXDB_DATA_USER data
 ENV		INFLUXDB_DATA_PW data
