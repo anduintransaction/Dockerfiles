@@ -1,0 +1,4 @@
+#! /bin/bash
+
+docker rmi -f anduin/grafana-influxdb
+docker build -t anduin/grafana-influxdb .
