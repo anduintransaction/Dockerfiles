@@ -1,17 +1,37 @@
 {
   "id": null,
-  "title": "Anduin Cluster Resource Monitoring",
-  "originalTitle": "Anduin Cluster Resource Monitoring",
+  "title": "Anduin Deis Cluster Monitoring",
+  "originalTitle": "Anduin Deis Cluster Monitoring",
   "tags": [],
-  "style": "dark",
+  "style": "light",
   "timezone": "browser",
   "editable": true,
   "hideControls": false,
   "sharedCrosshair": false,
   "rows": [
     {
+      "title": "New row",
+      "height": "700px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Log monitoring",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "text",
+          "id": 12,
+          "mode": "html",
+          "content": "<html><body>\n<iframe src=\"http://54.165.225.34/kibana/#/dashboard/Log-Message-Monitoring?embed&_a=(filters:!(),panels:!((col:1,id:Log-Message-Count,row:1,size_x:6,size_y:3,type:visualization),(col:1,id:Log-Count-slash-Host,row:4,size_x:6,size_y:3,type:visualization),(col:7,id:Error-Messages,row:1,size_x:6,size_y:3,type:visualization),(col:7,id:Error-Messages-slash-Host,row:4,size_x:6,size_y:3,type:visualization),(col:1,id:Log-Count-slash-Service,row:7,size_x:6,size_y:3,type:visualization),(col:7,id:Error-Messages-slash-Service,row:7,size_x:6,size_y:3,type:visualization),(col:1,id:Monitor-sshd,row:14,size_x:12,size_y:3,type:visualization),(col:1,id:HTTP-GET,row:10,size_x:12,size_y:2,type:visualization),(col:1,id:Akka-Log,row:12,size_x:12,size_y:2,type:visualization),(col:1,id:All,row:17,size_x:12,size_y:9,type:search)),query:(query_string:(analyze_wildcard:!t,query:'*')),title:'Log%20Message%20Monitoring')&_g=(time:(from:now-4h,mode:quick,to:now))\" height=\"900\" width=\"100%\"></iframe>\n</body></html>",
+          "style": {},
+          "links": []
+        }
+      ]
+    },
+    {
       "title": "test",
-      "height": "250px",
+      "height": "150px",
       "editable": true,
       "collapse": false,
       "panels": [
@@ -23,7 +43,7 @@
           "y-axis": true,
           "scale": 1,
           "y_formats": [
-            "short",
+            "bytes",
             "short"
           ],
           "grid": {
@@ -75,7 +95,7 @@
               "column": "memory_usage",
               "series": "stats",
               "query": "select machine, max(memory_usage) from \"stats\" where $timeFilter group by time($interval), machine order asc",
-              "interval": "10s",
+              "interval": "30s",
               "groupby_field": "machine"
             }
           ],
@@ -102,7 +122,7 @@
           "x-axis": true,
           "y-axis": true,
           "y_formats": [
-            "short",
+            "bytes",
             "short"
           ],
           "grid": {
@@ -140,10 +160,10 @@
           },
           "targets": [
             {
-              "function": "max",
+              "function": "mean",
               "column": "memory_usage",
               "series": "stats",
-              "query": "select container_name, max(memory_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "query": "select container_name, mean(memory_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
               "interval": "10s",
               "groupby_field": "container_name"
             }
@@ -156,7 +176,7 @@
     },
     {
       "title": "New row",
-      "height": "250px",
+      "height": "150px",
       "editable": true,
       "collapse": false,
       "panels": [
@@ -210,12 +230,14 @@
           },
           "targets": [
             {
-              "function": "max",
+              "function": "mean",
               "column": "cpu_cumulative_usage",
               "series": "stats",
-              "query": "select machine, max(cpu_cumulative_usage) from \"stats\" where $timeFilter group by time($interval), machine order asc",
-              "interval": "10s",
-              "groupby_field": "machine"
+              "query": "select machine, mean(cpu_cumulative_usage) from \"stats\" where $timeFilter and cpu_cumulative_usage > 0 group by time($interval), machine order asc",
+              "interval": "30s",
+              "groupby_field": "machine",
+              "rawQuery": false,
+              "condition": "cpu_cumulative_usage > 0"
             }
           ],
           "aliasColors": {},
@@ -272,11 +294,11 @@
           },
           "targets": [
             {
-              "function": "max",
+              "function": "mean",
               "column": "cpu_cumulative_usage",
               "series": "stats",
-              "query": "select container_name, max(cpu_cumulative_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
-              "interval": "10s",
+              "query": "select container_name, mean(cpu_cumulative_usage) from \"stats\" where $timeFilter group by time($interval), container_name order asc",
+              "interval": "1m",
               "groupby_field": "container_name"
             }
           ],
@@ -288,7 +310,7 @@
     },
     {
       "title": "New row",
-      "height": "250px",
+      "height": "150px",
       "editable": true,
       "collapse": false,
       "panels": [
@@ -342,12 +364,13 @@
           },
           "targets": [
             {
-              "function": "sum",
+              "function": "mean",
               "column": "tx_bytes",
               "series": "stats",
-              "query": "select machine, sum(tx_bytes) from \"stats\" where $timeFilter group by time($interval), machine order asc",
-              "interval": "",
-              "groupby_field": "machine"
+              "query": "select machine, mean(tx_bytes) from \"stats\" where $timeFilter and tx_bytes > 0 group by time($interval), machine order asc",
+              "interval": "1m",
+              "groupby_field": "machine",
+              "condition": "tx_bytes > 0"
             }
           ],
           "aliasColors": {},
@@ -420,7 +443,7 @@
     },
     {
       "title": "New row",
-      "height": "250px",
+      "height": "150px",
       "editable": true,
       "collapse": false,
       "panels": [
@@ -474,12 +497,13 @@
           },
           "targets": [
             {
-              "function": "sum",
+              "function": "mean",
               "column": "rx_bytes",
               "series": "stats",
-              "query": "select machine, sum(rx_bytes) from \"stats\" where $timeFilter group by time($interval), machine order asc",
-              "interval": "",
-              "groupby_field": "machine"
+              "query": "select machine, mean(rx_bytes) from \"stats\" where $timeFilter group by time($interval), machine order asc",
+              "interval": "1s",
+              "groupby_field": "machine",
+              "condition": ""
             }
           ],
           "aliasColors": {},
@@ -594,6 +618,7 @@
   "annotations": {
     "list": []
   },
+  "refresh": false,
   "version": 6,
   "hideAllLegends": false
 }
