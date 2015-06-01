@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository ppa:webupd8team/java; apt-get update;
 
 # install java 8
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections; apt-get -y install oracle-java8-installer oracle-java8-set-default mvn --no-install-recommends
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections; apt-get -y install oracle-java8-installer oracle-java8-set-default maven --no-install-recommends
 
 # set JAVA_HOME
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
