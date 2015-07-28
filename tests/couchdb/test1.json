@@ -1,0 +1,8 @@
+{
+  "consumer_keys" : {
+    "consumerTest1": "test1ConsumerSecret"
+  },
+  "tokens": {
+    "tokenTest1": "test1TokenSecret"
+  }
+}
