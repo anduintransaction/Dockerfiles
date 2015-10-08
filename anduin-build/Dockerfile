@@ -6,6 +6,10 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN groupadd -r anduin && useradd -g anduin anduin
 
+ADD https://github.com/Pyppe/phantomjs2.0-ubuntu14.04x64/raw/master/bin/phantomjs /usr/bin/phantomjs
+
+RUN chmod +x /usr/bin/phantomjs
+
 # install essential tools
 RUN apt-get update && apt-get install -yq \
     ca-certificates \
@@ -21,10 +25,6 @@ RUN apt-get update && apt-get install -yq \
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-ADD https://github.com/Pyppe/phantomjs2.0-ubuntu14.04x64/raw/master/bin/phantomjs /usr/bin
-
-RUN chmod +x /usr/bin/phantomjs
 
 # add repos and update:
 RUN add-apt-repository ppa:webupd8team/java; apt-get update
