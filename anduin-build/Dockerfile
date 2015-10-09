@@ -1,14 +1,10 @@
-FROM phusion/passenger-full:0.9.17
+FROM anduin/anduin-phantomjs2:0.5.1
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 # avoid interactive dialog from apt:
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN groupadd -r anduin && useradd -g anduin anduin
-
-ADD https://github.com/Pyppe/phantomjs2.0-ubuntu14.04x64/raw/master/bin/phantomjs /usr/bin/phantomjs
-
-RUN chmod +x /usr/bin/phantomjs
 
 # install essential tools
 RUN apt-get update && apt-get install -yq \
