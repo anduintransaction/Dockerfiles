@@ -45,6 +45,7 @@ RUN mkdir -p $GOPATH && \
     cd $SGROOT && \
     git checkout 1.2.1 && \	
     git submodule update --init --recursive && \
+    find . | grep .git | xargs rm -rf && \
     ./build.sh && \
     cp bin/sync_gateway /usr/local/bin && \
     mkdir -p $SGROOT/data
