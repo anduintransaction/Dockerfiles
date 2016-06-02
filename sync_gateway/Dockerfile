@@ -3,7 +3,7 @@ FROM centos:centos7
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 ENV GOPATH /opt/go
-ENV SGROOT /opt/sync_gateway
+ENV SGROOT /opt/anduin/sync_gateway
 ENV GOROOT /usr/local/go
 ENV PATH $PATH:$GOPATH/bin:$GOROOT/bin
 
@@ -40,6 +40,7 @@ RUN go get github.com/tools/godep && \
 
 # Build Sync Gateway
 RUN mkdir -p $GOPATH && \
+    mkdir -p /opt/anduin && \
     cd /opt/anduin && \ 
     git clone https://github.com/couchbase/sync_gateway.git && \
     cd $SGROOT && \
