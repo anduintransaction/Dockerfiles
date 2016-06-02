@@ -1,5 +1,5 @@
 # Based on https://github.com/frol/docker-alpine-oraclejdk8
-FROM alpine:3.2
+FROM alpine:3.3
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 # Here we use several hacks collected from https://github.com/gliderlabs/docker-alpine/issues/11:
