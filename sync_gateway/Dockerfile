@@ -40,7 +40,7 @@ RUN go get github.com/tools/godep && \
 
 # Build Sync Gateway
 RUN mkdir -p $GOPATH && \
-    cd /opt && \ 
+    cd /opt/anduin && \ 
     git clone https://github.com/couchbase/sync_gateway.git && \
     cd $SGROOT && \
     git checkout 1.2.1 && \	
@@ -49,6 +49,13 @@ RUN mkdir -p $GOPATH && \
     cp bin/sync_gateway /usr/local/bin && \
     find . | grep .git | xargs rm -rf && \
     mkdir -p $SGROOT/data
+
+##### supervisor
+# Configure
+RUN rm -rf /etc/supervisor
+ADD ./config/supervisord /etc/supervisor
+
+VOLUME ["/opt/supervisord"]
 
 RUN groupadd -g 1000 couchbase && useradd couchbase -u 1000 -g couchbase -M
 
