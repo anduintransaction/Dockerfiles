@@ -16,8 +16,15 @@ RUN yum -y update && \
     emacs-nox \
     git \
     mercurial \
-    supervisor \
-    wget 
+    wget \
+    epel-release \
+    iproute \
+    python-setuptools \
+    hostname \
+    inotify-tools \
+    yum-utils which && \
+    yum clean all && \
+    easy_install supervisor
 
 # Download and install Go
 RUN wget http://golang.org/dl/go1.6.2.linux-amd64.tar.gz && \
