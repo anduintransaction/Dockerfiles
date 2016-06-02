@@ -41,6 +41,7 @@ RUN go get github.com/tools/godep && \
 # Build Sync Gateway
 RUN mkdir -p $GOPATH && \
     mkdir -p /opt/anduin && \
+    mkdir -p /opt/supervisord/logs && \
     cd /opt/anduin && \ 
     git clone https://github.com/couchbase/sync_gateway.git && \
     cd $SGROOT && \
