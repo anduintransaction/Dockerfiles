@@ -57,8 +57,6 @@ RUN mkdir -p $GOPATH && \
 RUN rm -rf /etc/supervisor
 ADD ./config/supervisord /etc/supervisor
 
-VOLUME ["/opt/supervisord"]
-
 RUN groupadd -g 1000 couchbase && useradd couchbase -u 1000 -g couchbase -M
 
 # Expose ports
