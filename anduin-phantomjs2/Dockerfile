@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:0.9.17
+FROM phusion/passenger-full:0.9.18
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y \
@@ -17,7 +17,9 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y \
     libssl-dev \
     libpng-dev \
     libjpeg-dev \
-    libqt5webkit5-dev
+    python \
+    libx11-dev \
+    libxext-dev
 
 ENV PHANTOM_JS_TAG 2.1.1
 

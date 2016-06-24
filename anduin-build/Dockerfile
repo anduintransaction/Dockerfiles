@@ -1,4 +1,4 @@
-FROM anduin/anduin-phantomjs:0.5.2
+FROM anduin/anduin-phantomjs2:0.6.0
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 # avoid interactive dialog from apt:
