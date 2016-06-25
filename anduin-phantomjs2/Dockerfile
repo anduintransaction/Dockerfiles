@@ -1,7 +1,7 @@
 FROM phusion/passenger-full:0.9.18
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
-export DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y \
     git \
