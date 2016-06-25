@@ -23,12 +23,11 @@ RUN apt-get update -qq && apt-get  -o Dpkg::Options::="--force-confnew" upgrade 
     libx11-dev \
     libxext-dev
 
-ENV PHANTOM_JS_TAG 2.1.1
-
-RUN git clone https://github.com/ariya/phantomjs.git /tmp/phantomjs && \
-  cd /tmp/phantomjs && git checkout $PHANTOM_JS_TAG && \
-  ./build.sh --confirm && mv bin/phantomjs /usr/local/bin && \
-  rm -rf /tmp/phantomjs
+RUN mkdir /tmp/phantomjs \
+    && curl -L https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+           | tar -xj --strip-components=1 -C /tmp/phantomjs \
+    && cd /tmp/phantomjs \
+    && mv bin/phantomjs /usr/local/bin
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
