@@ -3,7 +3,7 @@ MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y \
+RUN apt-get update -qq && apt-get  -o Dpkg::Options::="--force-confnew" upgrade -y && apt-get -o Dpkg::Options::="--force-confnew" install -y \
     git \
     build-essential \
     g++ \
