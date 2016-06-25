@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN groupadd -r anduin && useradd -g anduin anduin
 
 # install essential tools
-RUN apt-get update && apt-get install -yq \
+RUN apt-get update && apt-get -o Dpkg::Options::="--force-confnew" install -yq \
     ca-certificates \
     software-properties-common \
     python-software-properties \
