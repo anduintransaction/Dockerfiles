@@ -22,18 +22,28 @@ RUN apt-get update && apt-get -o Dpkg::Options::="--force-confnew" install -yq \
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# add repos and update:
-RUN add-apt-repository ppa:webupd8team/java; apt-get update
+# Install JDK 8 
+RUN apt-get --quiet update && \
+    apt-get --quiet --yes install wget && \
+    apt-get clean && \
+    wget --quiet \
+         --output-document=/jdk-8.tar.gz \
+         --no-check-certificate \
+         --no-cookies \
+         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+         http://download.oracle.com/otn-pub/java/jdk/8u77-b03/jdk-8u77-linux-x64.tar.gz && \
+    mkdir -p /usr/lib/jvm && \
+    tar --gunzip --extract --verbose --file /jdk-8.tar.gz --directory /usr/lib/jvm && \
+    rm -f /jdk-8.tar.gz && \
+    chown -R root:root /usr/lib/jvm
 
-# install java 8
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections; apt-get -y install oracle-java8-installer oracle-java8-set-default  ca-certificates-java --no-install-recommends
+# set the environment variables 
+ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_77
+ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_77
+ENV PATH $PATH:$JAVA_HOME/bin
 
-# set JAVA_HOME
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
-
-# secured SecureRandom
-RUN sed -e 's%^\(securerandom.source\)=.*%\1=file:/dev/./urandom%' \
-        -i $JAVA_HOME/jre/lib/security/java.security
+# Force Docker to use UTF-8 encodings
+ENV LANG C.UTF-8
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
