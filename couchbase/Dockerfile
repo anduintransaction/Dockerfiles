@@ -1,6 +1,6 @@
 # based on https://github.com/arun-gupta/docker-images/tree/master/couchbase-server
 
-FROM couchbase/server:community
+FROM anduin/couchbase_server:4.1.0
 MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
 
 RUN apt-get update -y \
