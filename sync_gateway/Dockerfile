@@ -63,5 +63,6 @@ RUN groupadd -g 1000 couchbase && useradd couchbase -u 1000 -g couchbase -M
 EXPOSE 4984 4985
 
 COPY start_sync_gateway.sh /opt/anduin/sync_gateway/
+COPY run_sync_gateway.sh /opt/anduin/sync_gateway/
 
 CMD ["/opt/anduin/sync_gateway/start_sync_gateway.sh"]
