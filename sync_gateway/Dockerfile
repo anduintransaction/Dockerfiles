@@ -52,6 +52,12 @@ RUN mkdir -p $GOPATH && \
     find . | grep .git | xargs rm -rf && \
     mkdir -p $SGROOT/data
 
+##### nginx
+# Install
+RUN yum -y install nginx
+RUN rm -rf /etc/nginx
+ADD ./config/nginx /etc/nginx
+
 ##### supervisor
 # Configure
 RUN rm -rf /etc/supervisor
