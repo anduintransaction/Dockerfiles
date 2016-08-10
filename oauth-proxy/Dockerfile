@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 MAINTAINER ductamnguyen@anduintransact.com
 
 # Install nginx & supervisor
-RUN apt-get update -y && apt-get install -y --no-install-recommends wget nginx supervisor gettext
+RUN apt-get update -y && apt-get install -y --no-install-recommends wget nginx supervisor gettext ca-certificates
 
 # Install oauth proxy
 RUN wget --no-check-certificate -O /oauth2_proxy.tar.gz \
