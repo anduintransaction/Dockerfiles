@@ -29,6 +29,8 @@ esac
 
 if [ x$USE_HTTP != 'xtrue' ]; then
     OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} -cookie-secure=true"
+else
+    OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} -cookie-secure=false"
 fi
 
 /oauth2_proxy $OAUTH_PROXY_OPTIONS
