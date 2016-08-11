@@ -8,7 +8,6 @@ OAUTH_PROXY_OPTIONS="\
               -upstream=http://localhost:18001 \
               -cookie-secret=${OAUTH_PROXY_COOKIE_SECRET} \
               -cookie-domain=${OAUTH_PROXY_COOKIE_DOMAIN} \
-              -cookie-secure=true \
               -http-address=0.0.0.0:4321 \
               -redirect-url=${OAUTH_PROXY_COOKIE_URL}"
 
@@ -27,5 +26,9 @@ case ${OAUTH_PROXY_PROVIDER} in
         exit 1
      ;;
 esac
+
+if [ x$USE_HTTP != 'xtrue' ]; then
+    OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} -cookie-secure=true"
+fi
 
 /oauth2_proxy $OAUTH_PROXY_OPTIONS
