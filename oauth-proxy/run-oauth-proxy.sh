@@ -15,10 +15,10 @@ case ${OAUTH_PROXY_PROVIDER} in
      github)
         OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} \
 -login-url=https://github.com/login/oauth/authorize \
--github-org=${OAUTH_GITHUB_ORG}"
-        if [ x$OAUTH_GITHUB_TEAM != "x" ]; then
+-github-org=${OAUTH_PROXY_GITHUB_ORG}"
+        if [ x$OAUTH_PROXY_GITHUB_TEAM != "x" ]; then
             OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} \
--github-team=${OAUTH_GITHUB_TEAM}"
+-github-team=${OAUTH_PROXY_GITHUB_TEAM}"
         fi
      ;;
      *)
