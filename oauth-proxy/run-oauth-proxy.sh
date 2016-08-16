@@ -5,7 +5,7 @@ OAUTH_PROXY_OPTIONS="\
               -client-secret=${OAUTH_PROXY_CLIENT_SECRET} \
               -provider=${OAUTH_PROXY_PROVIDER} \
               -email-domain=* \
-              -upstream=http://localhost:18001 \
+              -upstream=${OAUTH_PROXY_UPSTREAM} \
               -cookie-secret=${OAUTH_PROXY_COOKIE_SECRET} \
               -cookie-domain=${OAUTH_PROXY_COOKIE_DOMAIN} \
               -http-address=0.0.0.0:4321 \
@@ -27,7 +27,7 @@ case ${OAUTH_PROXY_PROVIDER} in
      ;;
 esac
 
-if [ x$USE_HTTP != 'xtrue' ]; then
+if [ x$OAUTH_PROXY_USE_HTTP != 'xtrue' ]; then
     OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} -cookie-secure=true"
 fi
 
