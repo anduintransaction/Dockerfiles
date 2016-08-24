@@ -20,6 +20,7 @@ RUN mkdir -p /opt/couchbase-sync-gateway/data && mkdir -p /opt/anduin/sync_gatew
 
 ##### nginx
 # Install
+ADD nginx.repo /etc/yum.repos.d/nginx.repo
 RUN yum -y install nginx
 RUN rm -rf /etc/nginx
 ADD ./config/nginx /etc/nginx
