@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-/usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf
+/usr/local/bin/envconsul -log-level debug -consul $CONSUL_ENDPOINT -prefix $CONSUL_PREFIX /run-oauth-proxy.sh
