@@ -33,4 +33,4 @@ else
     OAUTH_PROXY_OPTIONS="${OAUTH_PROXY_OPTIONS} -cookie-secure=false"
 fi
 
-/oauth2_proxy $OAUTH_PROXY_OPTIONS
+exec /oauth2_proxy $OAUTH_PROXY_OPTIONS
