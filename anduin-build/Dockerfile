@@ -37,6 +37,9 @@ RUN apt-get --quiet update && \
     rm -f /jdk-8.tar.gz && \
     chown -R root:root /usr/lib/jvm
 
+# Install SCSS
+RUN gem install sass -v 3.4.21
+
 # set the environment variables 
 ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_101
 ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_101
