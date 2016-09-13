@@ -16,8 +16,6 @@ RUN apt-get update && apt-get install -y wget curl make g++ && \
 
 RUN sed -i -e "s/USER=td-agent/USER=root/" -e "s/GROUP=td-agent/GROUP=root/" /etc/init.d/td-agent
 
-ADD start-td-agent.sh /
-
 # Clean up APT when done.
 RUN rm -rf /opt/td-agent/embedded/share/doc \
       /opt/td-agent/embedded/share/gtk-doc \
@@ -29,3 +27,6 @@ RUN apt-get remove -y make g++ && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD start-td-agent.sh /
+CMD /start-td-agent.sh
