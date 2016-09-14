@@ -34,8 +34,8 @@ COPY start_sync_gateway.sh /opt/anduin/sync_gateway/
 COPY run_sync_gateway.sh /opt/anduin/sync_gateway/
 
 # Install fixed version of sync gateway
-RUN wget https://github.com/anduintransaction/sync_gateway/releases/download/1.3.1-fixed/sync_gateway-1.3.1-fixed-linux-amd64.tar.gz && \
-    tar xvzf sync_gateway-1.3.1-fixed-linux-amd64.tar.gz && \
+RUN wget https://github.com/anduintransaction/sync_gateway/releases/download/1.3-anduin-v1/sync_gateway-1.3.1-anduin-linux-amd64.tar.gz && \
+    tar xvzf sync_gateway-1.3.1-anduin-linux-amd64.tar.gz && \
     mv sync_gateway /opt/couchbase-sync-gateway/bin
 
 CMD ["/opt/anduin/sync_gateway/start_sync_gateway.sh"]
