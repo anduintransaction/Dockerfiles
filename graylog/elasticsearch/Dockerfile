@@ -27,7 +27,7 @@ RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
     echo "deb https://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list && \
     apt-get update && apt-get install elasticsearch
     
-RUN sed -i 's/# cluster.name: my-application/cluster.name: greylog/' /etc/elasticsearch/elasticsearch.yml
+RUN sed -i 's/# cluster.name: my-application/cluster.name: graylog/' /etc/elasticsearch/elasticsearch.yml
 
 ADD run.sh /
 ADD loop.sh /
