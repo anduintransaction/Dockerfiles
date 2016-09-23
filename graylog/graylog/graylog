@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+if [ -f "/usr/share/graylog-server/installation-source.sh" ]; then
+    . "/usr/share/graylog-server/installation-source.sh"
+fi
+
+GRAYLOG_SERVER_JAVA_OPTS="-Xms1g -Xmx1g -XX:NewRatio=1 -server -XX:+ResizeTLAB -XX:+UseConcMarkSweepGC -XX:+CMSConcurrentMTEnabled -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:-OmitStackTraceInFastThrow"
+GREYLOG_SERVER_PID_FILE=/var/run/greylog.pid
+
+function start {
+    echo "Starting graylog-server"
+    if [ -f $GREYLOG_SERVER_PID_FILE ]; then
+        pid=`cat $GREYLOG_SERVER_PID_FILE`
+        kill -0 $pid > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            echo ".Done"
+            exit 0
+        fi
+    fi
+    nohup java $GRAYLOG_SERVER_JAVA_OPTS \
+         -jar -Dlog4j.configurationFile=file:///etc/graylog/server/log4j2.xml \
+         -Djava.library.path=/usr/share/graylog-server/lib/sigar \
+         -Dgraylog2.installation_source=deb \
+         /usr/share/graylog-server/graylog.jar server -f /etc/graylog/server/server.conf -np > /var/log/graylog.log 2>&1 &
+    pid=`echo $/`
+    count=0
+    until $(kill -0 $pid > /dev/null 2>&1); do
+        printf "."
+        sleep 1
+        count=`expr $count + 1`
+        if [ $count -gt 10 ]; then
+            echo ".Fail"
+            exit 0
+        fi
+    done
+    echo $pid > $GREYLOG_SERVER_PID_FILE
+    echo ".Done"
+}
+
+function stop {
+    echo "Stopping graylog-server"
+    if [ -f $GREYLOG_SERVER_PID_FILE ]; then
+        pid=`cat $GREYLOG_SERVER_PID_FILE`
+        kill -0 $pid > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            kill $pid > /dev/null 2>&1
+        fi
+        count=0
+        while $(kill -0 $pid > /dev/null 2>&1); do
+            printf "."
+            sleep 1
+            count=`expr $count + 1`
+            if [ $count -gt 10 ]; then
+                kill -9 $pid > /dev/null 2>&1
+                break
+            fi
+        done
+    fi
+}
+
+case $1 in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop && start
+        ;;
+    *)
+        echo "graylog start|stop|restart"
+        ;;
+esac

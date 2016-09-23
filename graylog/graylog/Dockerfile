@@ -1,14 +1,17 @@
-FROM anduin/consul-template
 
+FROM anduin/consul-template
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get update && apt-get -y install apt-transport-https wget curl && \
+    wget https://packages.graylog2.org/repo/packages/graylog-2.1-repository_latest.deb && \
+    dpkg -i graylog-2.1-repository_latest.deb && \
+    apt-get update && \
+    apt-get install -y graylog-server
+
 # Install JDK 8
-RUN apt-get --quiet update && \
-    apt-get --quiet --yes install wget apt-transport-https curl && \
-    apt-get clean && \
-    wget --quiet \
+RUN wget --quiet \
     --output-document=/jdk-8.tar.gz \
     --no-check-certificate \
     --no-cookies \
@@ -23,11 +26,11 @@ ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_101
 ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_101
 ENV PATH $PATH:$JAVA_HOME/bin
 
-RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
-    echo "deb https://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list && \
-    apt-get update && apt-get install elasticsearch
-    
+RUN apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* graylog-2.1-repository_latest.deb
+
+ADD graylog /
 ADD run.sh /
 
-EXPOSE 9200
 CMD /run.sh
