@@ -9,6 +9,8 @@ OAUTH_PROXY_OPTIONS="\
               -cookie-secret=${OAUTH_PROXY_COOKIE_SECRET} \
               -cookie-domain=${OAUTH_PROXY_COOKIE_DOMAIN} \
               -http-address=0.0.0.0:4321 \
+              -pass-basic-auth=false \
+              -pass-access-token=false \
               -redirect-url=${OAUTH_PROXY_COOKIE_URL}"
 
 case ${OAUTH_PROXY_PROVIDER} in
