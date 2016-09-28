@@ -22,7 +22,7 @@ function start {
          -Djava.library.path=/usr/share/graylog-server/lib/sigar \
          -Dgraylog2.installation_source=deb \
          /usr/share/graylog-server/graylog.jar server -f /etc/graylog/server/server.conf -np > /var/log/graylog.log 2>&1 &
-    pid=`echo $/`
+    pid=`echo $!`
     count=0
     until $(kill -0 $pid > /dev/null 2>&1); do
         printf "."
