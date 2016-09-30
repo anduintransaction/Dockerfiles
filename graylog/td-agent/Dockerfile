@@ -29,4 +29,5 @@ RUN apt-get remove -y make g++ && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD start-td-agent.sh /
+ADD td-agent /etc/default/td-agent
 CMD /start-td-agent.sh
