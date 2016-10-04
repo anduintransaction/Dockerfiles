@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y wget curl make g++ && \
     apt-get update && \
     apt-get install -y --force-yes td-agent && \
     /usr/sbin/td-agent-gem install gelf && \
-    wget -O /etc/td-agent/plugin/out_gelf.rb https://raw.githubusercontent.com/emsearcy/fluent-plugin-gelf/master/lib/fluent/plugin/out_gelf.rb && \
     td-agent-gem install --no-document fluent-plugin-kubernetes_metadata_filter
 
 RUN sed -i -e "s/USER=td-agent/USER=root/" -e "s/GROUP=td-agent/GROUP=root/" /etc/init.d/td-agent
@@ -30,4 +29,5 @@ RUN apt-get remove -y make g++ && \
 
 ADD start-td-agent.sh /
 ADD td-agent /etc/default/td-agent
+ADD out_gelf.rb /etc/td-agent/plugin/out_gelf.rb
 CMD /start-td-agent.sh
