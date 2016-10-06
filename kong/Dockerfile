@@ -18,4 +18,4 @@ RUN mkdir -p /data/kong
 
 ADD supervisord.conf /etc/supervisord.conf
 
-CMD /run.sh
+CMD /run-app.sh
