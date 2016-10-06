@@ -9,6 +9,7 @@ until $(curl --output /dev/null --silent --head --fail http://$CONSUL_ENDPOINT/v
 done
 echo "done"
 
+rm -f $CONSUL_APP_CONFIG
 consul-template -consul $CONSUL_ENDPOINT \
                 -template "/tmp/app.tmpl:$CONSUL_APP_CONFIG" \
                 -exec "supervisord -c /etc/supervisord.conf"

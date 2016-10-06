@@ -1,4 +1,4 @@
-FROM anduin/consul-template-supervisor
+FROM anduin/consul-template-supervisor:1.1
 
 MAINTAINER ductamnguyen@anduintransact.com
 
@@ -17,5 +17,6 @@ RUN apt-get autoremove -y && \
 RUN mkdir -p /data/kong
 
 ADD supervisord.conf /etc/supervisord.conf
+ADD run-kong.sh /
 
 CMD /run-app.sh
