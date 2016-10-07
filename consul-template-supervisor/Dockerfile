@@ -16,4 +16,4 @@ RUN apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY run-app.sh /
+COPY start-app.sh /
