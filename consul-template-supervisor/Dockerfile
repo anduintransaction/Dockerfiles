@@ -12,8 +12,8 @@ RUN wget -O consul-template.zip https://releases.hashicorp.com/consul-template/$
     && mv consul-template /usr/local/bin \
     && rm -rf consul-template.zip
 
+ADD run.sh /
+
 RUN apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-COPY start-app.sh /
