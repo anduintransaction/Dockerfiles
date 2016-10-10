@@ -4,7 +4,7 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV PROMETHEUS_VERSION 1.1.3
+ENV PROMETHEUS_VERSION 1.2.0
 
 RUN wget -O prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz && \
     tar xvzf prometheus.tar.gz && \
