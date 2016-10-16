@@ -4,7 +4,7 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV PROMETHEUS_VERSION 1.2.0
+ENV PROMETHEUS_VERSION 1.2.1
 
 ADD entry-point.sh /
 ADD run-prometheus.sh /
