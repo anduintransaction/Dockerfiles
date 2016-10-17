@@ -11,6 +11,7 @@ done
 echo "done"
 
 rm -f $CONSUL_APP_CONFIG
+rm -f /etc/alertmanager.tmpl
 consul-template -consul $CONSUL_ENDPOINT \
                 -template "/tmp/app.tmpl:$CONSUL_APP_CONFIG" \
                 -template "/tmp/templates.tmpl:/etc/alertmanager.tmpl" \
