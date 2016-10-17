@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV ALERT_MANAGER_VERSION 0.4.2
 ENV CONSUL_APP_CONFIG /opt/alertmanager.yml
 
+ADD entry-point.sh /
+ADD run-alertmanager.sh /
 ADD supervisord.conf /etc
 ADD run-consul.sh /
 
@@ -14,4 +16,6 @@ RUN wget -O alertmanager.tar.gz https://github.com/prometheus/alertmanager/relea
     rm alertmanager.tar.gz && \
     mv alertmanager-${ALERT_MANAGER_VERSION}.linux-amd64/alertmanager /opt
 
-CMD /run-consul.sh
+ENTRYPOINT ["/entry-point.sh"]
+
+CMD ["alertmanager"]
