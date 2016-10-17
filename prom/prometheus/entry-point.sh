@@ -9,4 +9,4 @@ if [ $# -gt 0 ] && [ "x$1" == "xprometheus" ]; then
 fi
 export EXTRA_ARGS=$@
 
-/run.sh
+/run-consul.sh
