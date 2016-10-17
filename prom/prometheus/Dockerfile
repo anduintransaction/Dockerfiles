@@ -3,11 +3,12 @@ FROM anduin/consul-template-supervisor:1.1
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
-
+ENV CONSUL_APP_CONFIG /etc/prometheus.yml
 ENV PROMETHEUS_VERSION 1.2.1
 
 ADD entry-point.sh /
 ADD run-prometheus.sh /
+ADD run-consul.sh /
 ADD supervisord.conf /etc
 
 RUN wget -O prometheus.tar.gz https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz && \

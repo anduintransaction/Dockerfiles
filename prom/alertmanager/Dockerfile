@@ -12,5 +12,6 @@ RUN wget -O alertmanager.tar.gz https://github.com/prometheus/alertmanager/relea
     mv alertmanager-${ALERT_MANAGER_VERSION}.linux-amd64/alertmanager /opt
 
 ADD supervisord.conf /etc
+ADD run-consul.sh /
 
-CMD /run.sh
+CMD /run-consul.sh
