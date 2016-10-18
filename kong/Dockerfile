@@ -2,12 +2,12 @@ FROM anduin/consul-template-supervisor:1.1
 
 MAINTAINER ductamnguyen@anduintransact.com
 
+ADD run-kong.sh /
+ADD supervisord.conf /etc/supervisord.conf
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV KONG_VERSION 0.9.2
 ENV CONSUL_APP_CONFIG /etc/kong.conf
-
-ADD supervisord.conf /etc/supervisord.conf
-ADD run-kong.sh /
 
 RUN apt-get update && \
     apt-get install -y netcat openssl libpcre3 dnsmasq procps perl postgresql-client && \
