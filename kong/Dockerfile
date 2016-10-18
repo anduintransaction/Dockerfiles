@@ -6,6 +6,9 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV KONG_VERSION 0.9.2
 ENV CONSUL_APP_CONFIG /etc/kong.conf
 
+ADD supervisord.conf /etc/supervisord.conf
+ADD run-kong.sh /
+
 RUN apt-get update && \
     apt-get install -y netcat openssl libpcre3 dnsmasq procps perl postgresql-client && \
     wget https://github.com/Mashape/kong/releases/download/$KONG_VERSION/kong-$KONG_VERSION.trusty_all.deb && \
@@ -16,8 +19,5 @@ RUN apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* kong-0.9.2.*.deb
 
 RUN mkdir -p /data/kong
-
-ADD supervisord.conf /etc/supervisord.conf
-ADD run-kong.sh /
 
 CMD /run.sh
