@@ -4,6 +4,7 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV KONG_VERSION 0.9.2
+ENV CONSUL_APP_CONFIG /etc/kong.conf
 
 RUN apt-get update && \
     apt-get install -y netcat openssl libpcre3 dnsmasq procps perl postgresql-client && \
