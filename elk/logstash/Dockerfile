@@ -41,5 +41,6 @@ RUN wget --quiet https://github.com/anduintransaction/logstash-codec-json_kubern
     rm logstash-codec-json_kubernetes-0.1.0.gem
 
 ADD supervisord.conf /etc/supervisord.conf
+ADD kubernetes-template.json /opt/logstash
 
 CMD /run.sh
