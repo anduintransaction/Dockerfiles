@@ -13,7 +13,7 @@ RUN wget --quiet https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSI
     rm -rf kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz
 
 # Logtrail
-RUN /opt/kibana/bin/kibana plugin -i logtrail -u https://github.com/anduintransaction/logtrail/releases/download/0.1.4-anduin/logtrail-0.1.4-anduin.tar.gz
+RUN /opt/kibana/bin/kibana plugin -i logtrail -u https://github.com/anduintransaction/logtrail/releases/download/0.1.4-anduin-1/logtrail-0.1.4-anduin-1.tar.gz
 
 RUN apt-get autoremove -y && \
     apt-get clean && \
