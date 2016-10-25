@@ -31,10 +31,14 @@ RUN apt-get autoremove -y && \
 
 # Logstash
 RUN wget --quiet https://download.elastic.co/logstash/logstash/logstash-${LOGSTASH_VERSION}.tar.gz && \
-    tar xvzf logstash-${LOGSTASH_VERSION}.tar.gz && \
+    tar xzf logstash-${LOGSTASH_VERSION}.tar.gz && \
     mv logstash-${LOGSTASH_VERSION} /opt/logstash && \
     rm logstash-${LOGSTASH_VERSION}.tar.gz && \
     /opt/logstash/bin/logstash-plugin install logstash-filter-kubernetes
+
+RUN wget --quiet https://github.com/anduintransaction/logstash-codec-json_kubernetes/releases/download/0.1.0/logstash-codec-json_kubernetes-0.1.0.gem && \
+    /opt/logstash/bin/logstash-plugin install logstash-codec-json_kubernetes-0.1.0.gem && \
+    rm logstash-codec-json_kubernetes-0.1.0.gem
 
 ADD supervisord.conf /etc/supervisord.conf
 
