@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
-# we need to set the permissions here because docker mounts volumes as root
+if [ -z "$COUCHDB_DIR" ]; then
+    export COUCHDB_DIR=/data/couchdb
+fi
 
-chown -R couchdb:couchdb /usr/local/var/lib/couchdb \
-  /usr/local/var/log/couchdb \
-  /usr/local/var/run/couchdb \
-  /usr/local/etc/couchdb
+if [ -z "$COUCHDB_USER" ]; then
+    export COUCHDB_USER=admin
+fi
 
-chmod -R 0770 /usr/local/var/lib/couchdb \
-  /usr/local/var/log/couchdb \
-  /usr/local/var/run/couchdb \
-  /usr/local/etc/couchdb
+if [ -z "$COUCHDB_PASSWORD" ]; then
+    export COUCHDB_PASSWORD=admin
+fi
+
+mkdir -p $COUCHDB_DIR/data $COUCHDB_DIR/logs
+
+envsubst < /usr/local/etc/couchdb/local.ini.tmpl > /usr/local/etc/couchdb/local.ini
 
 chmod 664 /usr/local/etc/couchdb/*.ini
 chmod 775 /usr/local/etc/couchdb/*.d
