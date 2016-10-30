@@ -1,43 +1,36 @@
-FROM centos:centos7
-
+FROM ubuntu:14.04
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV PATH $PATH:/opt/couchbase-sync-gateway/bin
+ENV DEBIAN_FRONTEND noninteractive
 
-# Install dependencies:
-#  wget: for downloading Sync Gateway package installer
-RUN yum -y update && \
-    yum install -y \
-    wget python-setuptools epel-release && \
-    easy_install supervisor
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C300EE8C && \
+    apt-get -y update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:nginx/stable && \
+    apt-get -y update && \
+    apt-get -y install nginx supervisor wget ca-certificates unzip curl
 
-# Install Sync Gateway
-RUN wget http://packages.couchbase.com/releases/couchbase-sync-gateway/1.3.0/couchbase-sync-gateway-community_1.3.0-274_x86_64.rpm && \
-    rpm -i couchbase-sync-gateway-community_1.3.0-274_x86_64.rpm && \
-    rm couchbase-sync-gateway-community_1.3.0-274_x86_64.rpm
+RUN apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    
+ENV CONSUL_TEMPLATE_VERSION 0.16.0
+RUN wget -O consul-template.zip https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip \
+    && unzip consul-template.zip \
+    && mv consul-template /usr/local/bin \
+    && rm -rf consul-template.zip
 
-RUN mkdir -p /opt/couchbase-sync-gateway/data && mkdir -p /opt/anduin/sync_gateway
-
-##### nginx
-# Install
-ADD nginx.repo /etc/yum.repos.d/nginx.repo
-RUN yum -y install nginx
-RUN rm -rf /etc/nginx
-ADD ./config/nginx /etc/nginx
-
-##### supervisor
-# Configure
-RUN rm -rf /etc/supervisor && mkdir -p /opt/supervisord/logs
-ADD ./config/supervisord /etc/supervisor
-
-COPY start_sync_gateway.sh /opt/anduin/sync_gateway/
-COPY run_sync_gateway.sh /opt/anduin/sync_gateway/
-
-# Install fixed version of sync gateway
 RUN wget https://github.com/anduintransaction/sync_gateway/releases/download/1.3-anduin-v1/sync_gateway-1.3.1-anduin-linux-amd64.tar.gz && \
     tar xvzf sync_gateway-1.3.1-anduin-linux-amd64.tar.gz && \
-    mv sync_gateway /opt/couchbase-sync-gateway/bin
+    mv sync_gateway /opt && \
+    rm sync_gateway-1.3.1-anduin-linux-amd64.tar.gz
 
-CMD ["/opt/anduin/sync_gateway/start_sync_gateway.sh"]
+ENV SYNC_GATEWAY_CONFIG_FILE /opt/sync-gateway-config.json
 
-EXPOSE 4984 4985
+RUN rm -rf /etc/nginx
+ADD ./config/nginx /etc/nginx
+ADD ./config/supervisord/supervisord.conf /opt
+ADD ./run-sync-gateway.sh /opt
+ADD ./run-consul.sh /opt
+
+CMD supervisord -c /opt/supervisord.conf
