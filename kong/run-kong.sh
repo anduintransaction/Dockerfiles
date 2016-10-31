@@ -8,7 +8,7 @@ function _quit {
 
 trap _quit SIGTERM
 
-/usr/local/bin/kong start &
+/usr/local/bin/kong start --nginx-conf /etc/custom_nginx.template &
 childPid=$!
 echo "Waiting $childPid"
 wait "$childPid"
