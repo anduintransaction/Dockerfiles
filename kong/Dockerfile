@@ -2,9 +2,6 @@ FROM anduin/consul-template-supervisor:1.1
 
 MAINTAINER ductamnguyen@anduintransact.com
 
-ADD run-kong.sh /
-ADD supervisord.conf /etc/supervisord.conf
-
 ENV DEBIAN_FRONTEND noninteractive
 ENV KONG_VERSION 0.9.2
 ENV CONSUL_APP_CONFIG /etc/kong.conf
@@ -20,4 +17,8 @@ RUN apt-get autoremove -y && \
 
 RUN mkdir -p /data/kong
 
-CMD /run.sh
+ADD run-consul.sh /opt
+ADD run-kong.sh /opt
+ADD supervisord.conf /etc/supervisord.conf
+
+CMD /opt/run-consul.sh
