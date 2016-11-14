@@ -1,26 +1,8 @@
-FROM anduin/anduin-phantomjs2:0.6.0
-MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
+FROM ubuntu:14.04
+MAINTAINER ductamnguyen@anduintransact.com
 
 # avoid interactive dialog from apt:
 ENV DEBIAN_FRONTEND noninteractive
-
-RUN groupadd -r anduin && useradd -g anduin anduin
-
-# install essential tools
-RUN apt-get update && apt-get -o Dpkg::Options::="--force-confnew" install -yq \
-    ca-certificates \
-    software-properties-common \
-    python-software-properties \
-    python-pip \
-    curl \
-    supervisor \
-    git \
-    libfontconfig \
-    libicu52 \
-    --no-install-recommends
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install JDK 8 
 RUN apt-get --quiet update && \
@@ -36,16 +18,6 @@ RUN apt-get --quiet update && \
     tar --gunzip --extract --verbose --file /jdk-8.tar.gz --directory /usr/lib/jvm && \
     rm -f /jdk-8.tar.gz && \
     chown -R root:root /usr/lib/jvm
-
-# Update ruby
-RUN apt-get update && \
-    apt-get install -y curl patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
-RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
-RUN /bin/bash -l -c "curl -L get.rvm.io | bash -s stable"
-RUN /bin/bash -l -c "rvm install 2.1"
-ENV PATH /usr/local/rvm/rubies/ruby-2.1.8/bin:$PATH
-RUN /bin/bash -l -c "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
-RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
 # Libreoffice
 RUN apt-get install -y unoconv
