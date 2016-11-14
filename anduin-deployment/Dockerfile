@@ -4,6 +4,8 @@ MAINTAINER ductamnguyen@anduintransact.com
 # avoid interactive dialog from apt:
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN groupadd -r anduin && useradd -g anduin anduin
+
 # Install JDK 8 
 RUN apt-get --quiet update && \
     apt-get --quiet --yes install wget && \
