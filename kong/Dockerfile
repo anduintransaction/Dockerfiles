@@ -7,9 +7,16 @@ ENV KONG_VERSION 0.9.2
 ENV CONSUL_APP_CONFIG /etc/kong.conf
 
 RUN apt-get update && \
-    apt-get install -y netcat openssl libpcre3 dnsmasq procps perl postgresql-client && \
+    apt-get install -y netcat openssl libpcre3 dnsmasq procps perl postgresql-client make && \
     wget https://github.com/Mashape/kong/releases/download/$KONG_VERSION/kong-$KONG_VERSION.trusty_all.deb && \
     dpkg -i kong-0.9.2.*.deb
+
+RUN wget --quiet 'https://github.com/nvmlabs/kong-custom-error-handlers/archive/master.zip' && \
+    unzip master.zip && \
+    cd kong-custom-error-handlers-master && \
+    make install && \
+    cd .. && \
+    rm -rf master.zip kong-custom-error-handlers
 
 RUN apt-get autoremove -y && \
     apt-get clean && \
