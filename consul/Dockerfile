@@ -15,8 +15,9 @@ RUN apt-get update && apt-get install -y unzip wget && \
     rm consul_${CONSUL_VERSION}_web_ui.zip
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ADD consul-config.json /opt/consul-config.json
 EXPOSE 8500
 
 VOLUME /data/consul
 
-CMD /opt/consul agent -server -data-dir=/data/consul -bootstrap-expect=1 -advertise=127.0.0.1 -client 0.0.0.0 -ui -ui-dir=/opt/consul-ui
+CMD exec /opt/consul agent -config-file=/opt/consul-config.json
