@@ -1,0 +1,11 @@
+{
+        "advertise_addr": "127.0.0.1",
+        "bind_addr": "0.0.0.0",
+        "client_addr": "0.0.0.0",
+        "bootstrap_expect": 1,
+        "server": true,
+        "data_dir": "/data/consul",
+        "ui": true,
+        "ui_dir": "/opt/consul-ui",
+        "leave_on_terminate": true
+}
