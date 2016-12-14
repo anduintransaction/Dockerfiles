@@ -33,4 +33,4 @@ ADD ./config/supervisord/supervisord.conf /opt
 ADD ./run-sync-gateway.sh /opt
 ADD ./run-consul.sh /opt
 
-CMD supervisord -c /opt/supervisord.conf
+CMD exec supervisord -c /opt/supervisord.conf

@@ -3,4 +3,4 @@
 chown -R couchbase:couchbase /opt/anduin/couchbase/
 
 # Run everything
-/usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf
+exec /usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf

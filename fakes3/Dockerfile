@@ -16,4 +16,4 @@ EXPOSE 4567
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
-CMD supervisord -c /supervisord.conf
+CMD exec supervisord -c /supervisord.conf
