@@ -18,4 +18,4 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY configure-node.sh /opt/anduin/couchbase/
 
-CMD ["/opt/anduin/couchbase/configure-node.sh"]
+CMD exec /opt/anduin/couchbase/configure-node.sh
