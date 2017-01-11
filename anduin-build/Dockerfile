@@ -43,7 +43,7 @@ RUN apt-get update && \
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 RUN /bin/bash -l -c "curl -L get.rvm.io | bash -s stable"
 RUN /bin/bash -l -c "rvm install 2.1"
-ENV PATH /usr/local/rvm/rubies/ruby-2.1.8/bin:$PATH
+ENV PATH /usr/local/rvm/rubies/ruby-2.1.10/bin:$PATH
 RUN /bin/bash -l -c "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
