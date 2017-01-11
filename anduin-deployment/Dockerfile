@@ -44,7 +44,7 @@ RUN fc-cache -f
 # set the environment variables 
 ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_112
 ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_112
-ENV PATH $PATH:$JAVA_HOME/bin
+ENV PATH $JAVA_HOME/bin:$PATH
 
 # Force Docker to use UTF-8 encodings
 ENV LANG en_US.UTF-8
