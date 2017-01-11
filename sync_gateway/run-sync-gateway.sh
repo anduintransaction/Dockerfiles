@@ -3,6 +3,22 @@
 SYNC_GATEWAY_CONFIG_FILE=/opt/sync-gateway-config.json
 PID=0
 
+if [ ! -z "$COUCHBASE_HOST" ]; then
+    COUCHBASE_URL="http://$COUCHBASE_HOST:8091"
+    echo "Wait for couchbase at ${COUCHBASE_URL}"
+    count=0
+    until $(curl --output /dev/null --silent --head --fail -m 10 ${COUCHBASE_URL}); do
+        echo '.'
+        sleep 5
+        count=`expr $count + 1`
+        if [ $count -gt 20 ]; then
+            echo "Something wrong when waiting for couchbase"
+            exit 1
+        fi
+    done
+    echo "done"
+fi
+
 function _quit {
     echo "Killing $PID FROM $$"
     KILLING=1        
