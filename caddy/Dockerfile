@@ -4,6 +4,7 @@ MAINTAINER ductamnguyen@anduintransact.com
 ENV DEBIAN_FRONTEND noninteractive
 ENV CADDY_VERSION v0.9.4
 ENV CONSUL_APP_CONFIG /opt/Caddyfile
+ENV CADDYPATH /data/caddy
 
 RUN wget https://github.com/mholt/caddy/releases/download/$CADDY_VERSION/caddy_linux_amd64.tar.gz && \
     mkdir caddy && \
@@ -15,5 +16,6 @@ RUN wget https://github.com/mholt/caddy/releases/download/$CADDY_VERSION/caddy_l
     rm -rf caddy
 
 ADD supervisord.conf /etc
+VOLUME /data/caddy
 
 CMD exec /run.sh
