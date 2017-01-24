@@ -2,16 +2,15 @@ FROM anduin/consul-template-supervisor:1.1
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV CADDY_VERSION v0.9.4
 ENV CONSUL_APP_CONFIG /opt/Caddyfile
 ENV CADDYPATH /data/caddy
 
-RUN wget https://github.com/mholt/caddy/releases/download/$CADDY_VERSION/caddy_linux_amd64.tar.gz && \
+RUN wget -O caddy.tar.gz 'https://caddyserver.com/download/build?os=linux&arch=amd64&features=cors%2Cprometheus%2Cratelimit%2Croute53' && \
     mkdir caddy && \
-    mv caddy_linux_amd64.tar.gz caddy && \
+    mv caddy.tar.gz caddy && \
     cd caddy && \
-    tar xvzf caddy_linux_amd64.tar.gz && \
-    mv caddy_linux_amd64 /opt/caddy && \
+    tar xvzf caddy.tar.gz && \
+    mv caddy /opt/caddy && \
     cd .. && \
     rm -rf caddy
 
