@@ -9,11 +9,11 @@ events {
     worker_connections  1024;
 }
 
-{{range .}}
 stream {
+{{range .}}
        server {
               listen {{.SourcePort}};
               proxy_pass {{.DestIP}}:{{.DestPort}};
        }
-}
 {{end}}
+}
