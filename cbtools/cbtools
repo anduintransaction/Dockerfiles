@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+    echo "Need command"
+    exit 1
+fi
+
+case $1 in
+    backup|dailybackup|restore)
+        here=`cd $(dirname $BASH_SOURCE); pwd`
+        for filename in `ls $here/cbtools-lib/*.sh`; do
+            source $filename
+        done
+        runCommand $@
+        ;;
+    *)
+        exec $@
+        ;;
+esac
