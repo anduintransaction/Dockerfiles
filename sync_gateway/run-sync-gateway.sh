@@ -32,9 +32,9 @@ trap _quit SIGTERM
 while true; do
     echo "Try to start FROM $$"
     if [ -f "$SYNC_GATEWAY_CONFIG_FILE" ]; then
-        /opt/sync_gateway $SYNC_GATEWAY_CONFIG_FILE &
+        /opt/couchbase-sync-gateway/bin/sync_gateway $SYNC_GATEWAY_CONFIG_FILE &
     else
-        /opt/sync_gateway &
+        /opt/couchbase-sync-gateway/bin/sync_gateway &
     fi
     PID=$!
     echo "waiting for $PID FROM $$"
