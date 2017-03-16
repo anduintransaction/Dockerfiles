@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN groupadd -r anduin && useradd -g anduin anduin
 
-# Install JDK 8 
+# Install JDK 8
 RUN apt-get --quiet update && \
     apt-get --quiet --yes install wget && \
     apt-get clean && \
@@ -41,10 +41,17 @@ RUN wget 'http://download.microsoft.com/download/f/5/a/f5a3df76-d856-4a61-a6bd-7
 ADD fonts/* /usr/share/fonts/truetype/msttcorefonts/
 RUN fc-cache -f
 
-# set the environment variables 
+# set the environment variables
 ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_121
 ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_121
 ENV PATH $JAVA_HOME/bin:$PATH
+
+# Unlimited strength
+RUN apt-get install unzip && wget --quiet --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
+    unzip jce_policy-8.zip && \
+    mkdir -p $JAVA_HOME/lib/security && \
+    cp UnlimitedJCEPolicyJDK8/*.jar $JAVA_HOME/lib/security && \
+    rm -rf jce_policy-8.zip UnlimitedJCEPolicyJDK8
 
 # Force Docker to use UTF-8 encodings
 ENV LANG en_US.UTF-8
