@@ -69,8 +69,8 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # Unlimited strength
 RUN apt-get install unzip && wget --quiet --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
     unzip jce_policy-8.zip && \
-    mkdir -p $JAVA_HOME/lib/security && \
-    cp UnlimitedJCEPolicyJDK8/*.jar $JAVA_HOME/lib/security && \
+    mkdir -p $JAVA_HOME/jre/lib/security && \
+    cp UnlimitedJCEPolicyJDK8/*.jar $JAVA_HOME/jre/lib/security && \
     rm -rf jce_policy-8.zip UnlimitedJCEPolicyJDK8
 
 # Force Docker to use UTF-8 encodings
