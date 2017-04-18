@@ -2,7 +2,7 @@ FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
 # Libreoffice
-RUN apt-get update && apt-get install -y unoconv
+RUN apt-get install python-software-properties && apt-add-repository -y ppa:libreoffice/ppa && apt-get update && apt-get install -y unoconv
 
 # Fonts
 RUN echo "deb http://us-west-2.ec2.archive.ubuntu.com/ubuntu/ trusty multiverse" | tee -a /etc/apt/sources.list.d/multiverse.list && \
