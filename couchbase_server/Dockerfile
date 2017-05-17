@@ -19,9 +19,9 @@ RUN apt-get update && \
     apt-get autoremove && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV CB_VERSION=4.5.0 \
+ENV CB_VERSION=4.5.1 \
     CB_RELEASE_URL=http://packages.couchbase.com/releases \
-    CB_PACKAGE=couchbase-server-community_4.5.0-ubuntu14.04_amd64.deb \
+    CB_PACKAGE=couchbase-server-community_4.5.1-ubuntu14.04_amd64.deb \
     PATH=$PATH:/opt/couchbase/bin:/opt/couchbase/bin/tools:/opt/couchbase/bin/install
 
 # Create Couchbase user with UID 1000 (necessary to match default
