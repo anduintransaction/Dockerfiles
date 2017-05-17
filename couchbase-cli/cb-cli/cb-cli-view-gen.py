@@ -9,7 +9,10 @@ mapFile = sys.argv[2]
 with open(mapFile) as fm:
     mapFunction = fm.read()
     viewContent = {
-        'name': viewName,
-        'func': mapFunction
+        'views': {
+            viewName: {
+                'map': mapFunction,
+            }
+        }
     }
     print json.dumps(viewContent)
