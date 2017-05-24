@@ -1,9 +1,9 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    CONSUL_VERSION=0.7.1
+    CONSUL_VERSION=0.8.3
 
 RUN apt-get update && apt-get install -y unzip wget && \
     wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
