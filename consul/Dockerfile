@@ -9,10 +9,7 @@ RUN apt-get update && apt-get install -y unzip wget && \
     wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
     unzip consul_${CONSUL_VERSION}_linux_amd64.zip && \
     rm consul_${CONSUL_VERSION}_linux_amd64.zip && \
-    mv consul /opt/consul && \
-    wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_web_ui.zip && \
-    unzip consul_${CONSUL_VERSION}_web_ui.zip -d /opt/consul-ui && \
-    rm consul_${CONSUL_VERSION}_web_ui.zip
+    mv consul /opt/consul
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD consul-config.json /opt/consul-config.json
