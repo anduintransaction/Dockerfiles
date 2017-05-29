@@ -4,7 +4,7 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV CONSUL_APP_CONFIG /etc/prometheus.yml
-ENV PROMETHEUS_VERSION 1.2.1
+ENV PROMETHEUS_VERSION 1.6.3
 
 ADD run-consul.sh /
 ADD supervisord.conf /etc

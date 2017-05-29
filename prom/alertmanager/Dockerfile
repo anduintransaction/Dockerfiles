@@ -3,7 +3,7 @@ FROM anduin/consul-template-supervisor:1.1
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV ALERT_MANAGER_VERSION 0.4.2
+ENV ALERT_MANAGER_VERSION 0.6.2
 ENV CONSUL_APP_CONFIG /opt/alertmanager.yml
 
 ADD entry-point.sh /
