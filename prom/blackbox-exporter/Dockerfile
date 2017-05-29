@@ -3,7 +3,7 @@ FROM anduin/consul-template-supervisor:1.1
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV BLACKBOX_EXPORTER_VERSION 0.2.0
+ENV BLACKBOX_EXPORTER_VERSION 0.5.0
 ENV CONSUL_APP_CONFIG /opt/blackbox_exporter.yml
 
 ADD supervisord.conf /etc
