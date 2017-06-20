@@ -4,14 +4,15 @@ MAINTAINER ductamnguyen@anduintransact.com
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update && \
-    apt-get -y install wget curl
-
-RUN apt-get autoremove -y && \
+    apt-get -y install wget curl && \
+    apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget https://packages.couchbase.com/releases/couchbase-sync-gateway/1.4.1/couchbase-sync-gateway-community_1.4.1-3_x86_64.deb && \
-    dpkg --unpack couchbase-sync-gateway-community_1.4.1-3_x86_64.deb
+RUN wget https://github.com/anduintransaction/sync_gateway/releases/download/1.4.1-anduin/sync_gateway.tar.gz && \
+    tar xvzf sync_gateway.tar.gz && \
+    mv sync_gateway /opt && \
+    rm sync_gateway.tar.gz
 
 ADD entrypoint.sh /opt/entrypoint.sh
 ADD sync-gateway-config-default.json /opt/sync-gateway-config-default.json
