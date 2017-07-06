@@ -3,8 +3,8 @@
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV KEYCLOAK_VERSION 3.1.0.Final
-RUN wget -O /opt/keycloak-${KEYCLOAK_VERSION}.tar.gz https://downloads.jboss.org/keycloak/3.1.0.Final/keycloak-${KEYCLOAK_VERSION}.tar.gz && \
+ENV KEYCLOAK_VERSION 3.2.0.Final
+RUN wget -O /opt/keycloak-${KEYCLOAK_VERSION}.tar.gz https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz && \
     cd /opt && \
     tar xvzf keycloak-${KEYCLOAK_VERSION}.tar.gz && \
     mv keycloak-${KEYCLOAK_VERSION} keycloak && \
