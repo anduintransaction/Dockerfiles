@@ -56,13 +56,5 @@ fi
 here=`cd $(dirname $BASH_SOURCE); pwd`
 checkEnv
 
-ipAddress=`ifconfig eth0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1`
-if [ -z "$ipAddress" ]; then
-    echo "Cannot determine local ip address"
-    exit 1
-fi
-
-echo "Using ip address: $ipAddress"
-
 $here/add-user-keycloak.sh --user $KEYCLOAK_ADMIN_USER --password $KEYCLOAK_ADMIN_PASSWORD &&
-    exec $here/standalone.sh -Djboss.bind.address.private=$ipAddress -b 0.0.0.0 --server-config standalone-ha.xml
+    exec $here/standalone.sh -b 0.0.0.0 --server-config standalone.xml
