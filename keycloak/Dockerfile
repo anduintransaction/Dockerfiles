@@ -1,4 +1,4 @@
-## -*- docker-image-name: "anduin/keycloak:1.0" -*-
+## -*- docker-image-name: "anduin/keycloak:1.2" -*-
 
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
@@ -23,9 +23,9 @@ ADD changeDatabase.xsl /opt/changeDatabase.xsl
 
 RUN wget -O /opt/saxon.jar http://central.maven.org/maven2/net/sf/saxon/Saxon-HE/9.7.0-18/Saxon-HE-9.7.0-18.jar && \
     java -jar /opt/saxon.jar \
-    -s:/opt/keycloak/standalone/configuration/standalone-ha.xml \
+    -s:/opt/keycloak/standalone/configuration/standalone.xml \
     -xsl:/opt/changeDatabase.xsl \
-    -o:/opt/keycloak/standalone/configuration/standalone-ha.xml && \
+    -o:/opt/keycloak/standalone/configuration/standalone.xml && \
     rm /opt/changeDatabase.xsl /opt/saxon.jar
     
 
