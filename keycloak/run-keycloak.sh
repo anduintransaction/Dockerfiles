@@ -57,4 +57,4 @@ here=`cd $(dirname $BASH_SOURCE); pwd`
 checkEnv
 
 $here/add-user-keycloak.sh --user $KEYCLOAK_ADMIN_USER --password $KEYCLOAK_ADMIN_PASSWORD &&
-    exec $here/standalone.sh -b 0.0.0.0 --server-config standalone.xml
+    exec $here/standalone.sh -Dfile.encoding=UTF-8 -b 0.0.0.0 --server-config standalone.xml

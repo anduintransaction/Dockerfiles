@@ -1,4 +1,4 @@
-## -*- docker-image-name: "anduin/keycloak:1.2" -*-
+## -*- docker-image-name: "anduin/keycloak:1.3" -*-
 
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
@@ -27,8 +27,10 @@ RUN wget -O /opt/saxon.jar http://central.maven.org/maven2/net/sf/saxon/Saxon-HE
     -xsl:/opt/changeDatabase.xsl \
     -o:/opt/keycloak/standalone/configuration/standalone.xml && \
     rm /opt/changeDatabase.xsl /opt/saxon.jar
-    
 
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+    
 ADD run-keycloak.sh /opt/keycloak/bin/run-keycloak.sh
 
 ENTRYPOINT ["/opt/keycloak/bin/run-keycloak.sh"]
