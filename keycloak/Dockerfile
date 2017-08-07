@@ -1,9 +1,9 @@
-## -*- docker-image-name: "anduin/keycloak:1.3" -*-
+## -*- docker-image-name: "anduin/keycloak:1.4" -*-
 
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV KEYCLOAK_VERSION 3.2.0.Final
+ENV KEYCLOAK_VERSION 3.2.1.Final
 RUN wget -O /opt/keycloak-${KEYCLOAK_VERSION}.tar.gz https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz && \
     cd /opt && \
     tar xvzf keycloak-${KEYCLOAK_VERSION}.tar.gz && \
