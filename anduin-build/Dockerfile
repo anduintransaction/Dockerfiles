@@ -31,3 +31,6 @@ RUN mkdir /tmp/phantomjs \
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV MJML_VERSION 3.3.3
+RUN npm install -g mjml@${MJML_VERSION}
