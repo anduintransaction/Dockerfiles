@@ -26,7 +26,7 @@ function doBackup {
     fi
     s3Bucket=$1
     echo "Backing up to $s3Bucket"
-    pg_dump $PGDATABASE > backup.sql &&
+    pg_dump $PGDATABASE --clean > backup.sql &&
         tar czf backup.sql.tar.gz backup.sql &&
         aws s3 cp backup.sql.tar.gz s3://$s3Bucket &&
         rm backup.sql backup.sql.tar.gz &&
