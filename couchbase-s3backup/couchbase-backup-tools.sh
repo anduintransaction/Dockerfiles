@@ -51,7 +51,8 @@ function doRestore {
     fi
     for bucket in $buckets; do
         echo "Restoring bucket $bucket"
-        /opt/couchbase/bin/cbrestore /tmp/restore http://$COUCHBASE_HOST -u $COUCHBASE_USERNAME -p $COUCHBASE_PASSWORD -b $bucket -B $bucket
+        /opt/couchbase/bin/couchbase-cli bucket-flush -c $COUCHBASE_HOST -u $COUCHBASE_USERNAME -p $COUCHBASE_PASSWORD --bucket=$bucket --force &&
+            /opt/couchbase/bin/cbrestore /tmp/restore http://$COUCHBASE_HOST -u $COUCHBASE_USERNAME -p $COUCHBASE_PASSWORD -b $bucket -B $bucket
         if [ $? -ne 0 ]; then
             exit 1
         fi
