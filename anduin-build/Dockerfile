@@ -3,6 +3,10 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 RUN groupadd -r anduin && useradd -g anduin anduin
 
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
 # Nodejs
 ENV NODE_VERSION v6.10.0
 RUN apt-get update && apt-get install xz-utils && \
@@ -12,7 +16,7 @@ RUN apt-get update && apt-get install xz-utils && \
     ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 # Ruby
-RUN apt-get install -y curl patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
+RUN apt-get install -y curl yarn patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 RUN /bin/bash -l -c "curl -L get.rvm.io | bash -s stable"
 RUN /bin/bash -l -c "rvm install 2.1"
@@ -29,8 +33,9 @@ RUN mkdir /tmp/phantomjs \
     && cd /tmp/phantomjs \
     && mv bin/phantomjs /usr/local/bin
 
+ENV MJML_VERSION 3.3.3
+RUN npm install -g mjml@${MJML_VERSION}
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV MJML_VERSION 3.3.3
-RUN npm install -g mjml@${MJML_VERSION}
