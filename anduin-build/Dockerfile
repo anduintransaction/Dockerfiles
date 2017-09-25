@@ -24,7 +24,7 @@ RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update && apt-get install yarn
+RUN apt-get update && apt-get install -y yarn
 
 # PhantomJS
 RUN apt-get install -y git build-essential g++ flex bison gperf perl libsqlite3-dev libfontconfig1-dev libicu-dev libfreetype6 libssl-dev libpng-dev libjpeg-dev libx11-dev libxext-dev
