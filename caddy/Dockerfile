@@ -1,20 +1,17 @@
-FROM anduin/consul-template-supervisor:1.1
+FROM golang:1.9-alpine
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV CONSUL_APP_CONFIG /opt/Caddyfile
-ENV CADDYPATH /data/caddy
+ENV CADDYPATH=/data/caddy CADDY_VERSION=0.10.9
 
-RUN wget -O caddy.tar.gz 'https://caddyserver.com/download/build?os=linux&arch=amd64&features=cors%2Cprometheus%2Cratelimit%2Croute53' && \
-    mkdir caddy && \
-    mv caddy.tar.gz caddy && \
-    cd caddy && \
-    tar xvzf caddy.tar.gz && \
-    mv caddy /opt/caddy && \
-    cd .. && \
-    rm -rf caddy
+RUN mkdir -p $GOPATH/src/github.com/mholt && \
+    cd $GOPATH/src/github.com/mholt && \
+    apk add --update ca-certificates openssl && update-ca-certificates && \
+    wget https://github.com/mholt/caddy/archive/v$CADDY_VERSION.zip && \
+    unzip v$CADDY_VERSION.zip && mv caddy-$CADDY_VERSION caddy && \
+    cd caddy/caddy && go install && cd / && rm -rf $GOPATH/src $GOPATH/pkg
 
-ADD supervisord.conf /etc
+ADD entrypoint.sh /opt/entrypoint.sh
+
 VOLUME /data/caddy
 
-CMD exec /run.sh
+ENTRYPOINT "/opt/entrypoint.sh"
