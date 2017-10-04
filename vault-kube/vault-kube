@@ -44,7 +44,10 @@ function loginToVault {
 
 function readEnvFromVault {
     vaultPath=$1
-    vault read -format=json $vaultPath | jq -r ".data|to_entries|map(\"\(.key)\t\(.value|tostring)\")|.[]"
+    for key in `vault list -format=json $vaultPath | jq -r '.[]'`; do
+        value=`vault read -format=json $vaultPath/$key | jq -r '.data.value'`
+        echo -e "$key\t$value"
+    done
 }
 
 function run {
