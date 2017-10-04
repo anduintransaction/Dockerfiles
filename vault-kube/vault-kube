@@ -80,6 +80,14 @@ function run {
         value=`echo "$line" | cut -f 2`
         export "$key"="$value"
     done <<< "$envVars"
+    prefix=vault:
+    for envKey in `env | cut -d "=" -f 1`; do
+        envValue="${!envKey}"
+        if [[ "$envValue" == $prefix* ]]; then
+            vaultKey=${envValue#$prefix}
+            export "$envKey"="${!vaultKey}"
+        fi
+    done
     exec $@
 }
 
