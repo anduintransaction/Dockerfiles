@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+function checkVault {
+    if ! which vault > /dev/null 2>&1; then
+        echo "vault was not installed"
+        return 1
+    fi
+    if ! vault status > /dev/null; then
+        return 1
+    fi
+}
+
+function checkEnv {
+    if [ -z "$VAULT_KUBERNETES_AUTH_ROLE" ]; then
+        echo "VAULT_KUBERNETES_AUTH_ROLE must be set"
+        exit 1
+    fi
+}
+
+function readVaultToken {
+    if [ -z "$SERVICE_ACCOUNT_TOKEN_FILE" ]; then
+        SERVICE_ACCOUNT_TOKEN_FILE=/var/run/secrets/kubernetes.io/serviceaccount/token
+    fi
+    if [ ! -f $SERVICE_ACCOUNT_TOKEN_FILE ]; then
+        echo "Service account token file not found"
+        return 1
+    fi
+    cat $SERVICE_ACCOUNT_TOKEN_FILE
+}
+
+function loginToVault {
+    if [ -z "$VAULT_KUBERNETES_AUTH_ENDPOINT" ]; then
+        VAULT_KUBERNETES_AUTH_ENDPOINT=kubernetes
+    fi
+    vaultToken=`vault write -format=json auth/$VAULT_KUBERNETES_AUTH_ENDPOINT/login \
+      role=$VAULT_KUBERNETES_AUTH_ROLE \
+      jwt=$serviceAccountToken | jq -r '.auth.client_token'`
+    if [ $? -ne 0 ]; then
+        echo "Login failed"
+        exit 1
+    fi
+    echo $vaultToken
+}
+
+function readEnvFromVault {
+    vaultPath=$1
+    vault read -format=json $vaultPath | jq -r ".data|to_entries|map(\"\(.key)\t\(.value|tostring)\")|.[]"
+}
+
+function run {
+    if [ $# -lt 2 ]; then
+        echo "USAGE: $0 [vault path] [executable] [args...]"
+        return 1
+    fi
+    vaultPath=$1
+    shift
+    if [ "$VAULT_DISABLE" == "1" ]; then
+        exec $@
+    fi
+    if ! checkVault; then
+        return 1
+    fi
+    if ! checkEnv; then
+        return 1
+    fi
+    serviceAccountToken=`readVaultToken`
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    vaultToken=`loginToVault`
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    envVars=`VAULT_TOKEN=$vaultToken readEnvFromVault $vaultPath`
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    while read line; do
+        key=`echo "$line" | cut -f 1`
+        value=`echo "$line" | cut -f 2`
+        export "$key"="$value"
+    done <<< "$envVars"
+    exec $@
+}
+
+run $@
