@@ -22,7 +22,7 @@ function readVaultToken {
         SERVICE_ACCOUNT_TOKEN_FILE=/var/run/secrets/kubernetes.io/serviceaccount/token
     fi
     if [ ! -f $SERVICE_ACCOUNT_TOKEN_FILE ]; then
-        echo "Service account token file not found"
+        echo >&2 "Service account token file not found"
         return 1
     fi
     cat $SERVICE_ACCOUNT_TOKEN_FILE
@@ -36,7 +36,7 @@ function loginToVault {
       role=$VAULT_KUBERNETES_AUTH_ROLE \
       jwt=$serviceAccountToken | jq -r '.auth.client_token'`
     if [ $? -ne 0 ]; then
-        echo "Login failed"
+        echo >&2 "Login failed"
         exit 1
     fi
     echo $vaultToken
