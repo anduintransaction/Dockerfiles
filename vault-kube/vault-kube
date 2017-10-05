@@ -78,11 +78,13 @@ function run {
     if [ $? -ne 0 ]; then
         return 1
     fi
-    while read line; do
-        key=`echo "$line" | cut -f 1`
-        value=`echo "$line" | cut -f 2`
-        export "$key"="$value"
-    done <<< "$envVars"
+    if [ ! -z "$envVars" ]; then
+        while read line; do
+            key=`echo "$line" | cut -f 1`
+            value=`echo "$line" | cut -f 2`
+            export "$key"="$value"
+        done <<< "$envVars"
+    fi
     prefix=vault:
     for envKey in `env | cut -d "=" -f 1`; do
         envValue="${!envKey}"
