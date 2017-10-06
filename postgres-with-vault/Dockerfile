@@ -1,9 +1,7 @@
-FROM anduin/couchbase_server:4.5.1
+FROM postgres:9.6
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV VAULT_VERSION=0.8.3
-
-ADD ./cb-cli/* /usr/local/bin/
 
 RUN apt-get -y update && apt-get install -y jq wget unzip && \
     wget https://releases.hashicorp.com/vault/$VAULT_VERSION/vault_${VAULT_VERSION}_linux_amd64.zip && \
@@ -15,4 +13,8 @@ RUN apt-get -y update && apt-get install -y jq wget unzip && \
     chmod 755 /usr/bin/vault-kube && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD /bin/bash
+ADD entrypoint.sh /opt/postgres-vault/entrypoint.sh
+
+ENTRYPOINT ["/opt/postgres-vault/entrypoint.sh"]
+
+CMD ["postgres"]
