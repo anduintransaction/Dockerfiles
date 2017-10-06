@@ -1,5 +1,3 @@
-## -*- docker-image-name: "anduin/keycloak:1.4" -*-
-
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
@@ -33,6 +31,20 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
     
 ADD run-keycloak.sh /opt/keycloak/bin/run-keycloak.sh
 
-ENTRYPOINT ["/opt/keycloak/bin/run-keycloak.sh"]
+ENV VAULT_VERSION=0.8.3
+
+RUN apt-get -y update && apt-get install -y jq unzip && \
+    wget https://releases.hashicorp.com/vault/$VAULT_VERSION/vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip vault_${VAULT_VERSION}_linux_amd64.zip && \
+    mv vault /usr/bin && \
+    rm vault_${VAULT_VERSION}_linux_amd64.zip && \
+    wget https://raw.githubusercontent.com/anduintransaction/Dockerfiles/master/vault-kube/vault-kube && \
+    mv vault-kube /usr/bin && \
+    chmod 755 /usr/bin/vault-kube && \
+    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD entrypoint.sh /opt/entrypoint.sh
+
+ENTRYPOINT ["/opt/entrypoint.sh"]
 
 CMD ["server"]

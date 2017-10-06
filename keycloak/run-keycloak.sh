@@ -35,7 +35,7 @@ function checkEnv {
         export KEYCLOAK_POSTGRES_PASSWORD="keycloak"
         echo "Using default postgres password: $KEYCLOAK_POSTGRES_PASSWORD"
     else
-        echo "Using postgres password: $KEYCLOAK_POSTGRES_PASSWORD"
+        echo "Using postgres password: ${KEYCLOAK_POSTGRES_PASSWORD:0:4}******"
     fi
     if [ -z "$KEYCLOAK_POSTGRES_DATABASE" ]; then
         export KEYCLOAK_POSTGRES_DATABASE="keycloak"
