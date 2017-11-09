@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+if [ $# -lt 1 ]; then
+    exec /bin/bash
+fi
+
+if [ $1 != "server" ]; then
+    exec $@
+fi
+
 if [ -z "$VAULT_FOLDER" ]; then
     exec /opt/keycloak/bin/run-keycloak.sh $@
 else
