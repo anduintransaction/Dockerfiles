@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 function checkEnv {
     if [ -z "$KEYCLOAK_ADMIN_USER" ]; then
