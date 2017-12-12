@@ -2,11 +2,25 @@
 
 function alreadyInit {
     httpCode=`curl --output /dev/null --silent --head --write-out '%{http_code}\n' http://$COUCHBASE_HOST:8091/pools/default`
-    if [ "$httpCode" == "200" ]; then
+    if [ "$httpCode" == "200" ] || [ "$httpCode" == "401" ]; then
         echo "Couchbase server at $COUCHBASE_HOST:8091 was already initialized"
         return 0
     fi
     return 1
+}
+
+function initCluster {
+    curl -sS -X POST -o /dev/null $COUCHBASE_HOST:8091/pools/default \
+         -d "memoryQuota=$COUCHBASE_MEMORY_QUOTA" \
+         -d "indexMemoryQuota=$COUCHBASE_INDEX_MEMORY_QUOTA" \
+         -d "ftsMemoryQuota=$COUCHBASE_INDEX_MEMORY_QUOTA" &&
+        curl -sS -X POST -o /dev/null $COUCHBASE_HOST:8091/node/controller/setupServices -d "services=kv,index,n1ql,fts" &&
+        curl -sS -X POST -o /dev/null $COUCHBASE_HOST:8091/settings/indexes -d "storageMode=forestdb" &&
+        curl -sS -X POST -o /dev/null $COUCHBASE_HOST:8091/settings/web \
+             -u Administrator:password \
+             -d "username=$COUCHBASE_USERNAME" \
+             -d "password=$COUCHBASE_PASSWORD" \
+             -d "port=SAME"
 }
 
 here=`cd $(dirname $BASH_SOURCE); pwd`
@@ -39,11 +53,4 @@ fi
                                  -c $COUCHBASE_HOST:8091 -u Administrator -p password \
                                  --node-init-data-path=/opt/couchbase/var/lib/couchbase/data \
                                  --node-init-index-path=/opt/couchbase/var/lib/couchbase/data &&
-    /opt/couchbase/bin/couchbase-cli cluster-init \
-                                     -c $COUCHBASE_HOST:8091 -u Administrator -p password \
-                                     --cluster-username=$COUCHBASE_USERNAME \
-                                     --cluster-password=$COUCHBASE_PASSWORD \
-                                     --cluster-port=8091 \
-                                     --services=$COUCHBASE_INIT_SERVICES \
-                                     --cluster-ramsize=$COUCHBASE_MEMORY_QUOTA \
-                                     --cluster-index-ramsize=$COUCHBASE_INDEX_MEMORY_QUOTA                                     
+    initCluster
