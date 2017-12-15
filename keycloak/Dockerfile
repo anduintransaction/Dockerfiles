@@ -1,7 +1,7 @@
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV KEYCLOAK_VERSION 3.4.0.Final
+ENV KEYCLOAK_VERSION 3.4.1.Final
 # Enables signals getting passed from startup script to JVM
 # ensuring clean shutdown when container is stopped.
 ENV LAUNCH_JBOSS_IN_BACKGROUND 1
