@@ -22,15 +22,15 @@ RUN wget --quiet \
     --no-check-certificate \
     --no-cookies \
     --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-    http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz && \
+    http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz && \
     mkdir -p /usr/lib/jvm && \
     tar --gunzip --extract --verbose --file /jdk-8.tar.gz --directory /usr/lib/jvm && \
     rm -f /jdk-8.tar.gz && \
     chown -R root:root /usr/lib/jvm
 
 # set the environment variables
-ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_144
-ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_144
+ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_152
+ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_152
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Unlimited strength
