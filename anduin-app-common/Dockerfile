@@ -1,4 +1,4 @@
-FROM anduin/anduin-common:1.2
+FROM anduin/anduin-common:1.3
 MAINTAINER ductamnguyen@anduintransact.com
 
 # Libreoffice
