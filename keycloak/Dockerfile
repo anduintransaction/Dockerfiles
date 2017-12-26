@@ -1,4 +1,4 @@
-FROM anduin/anduin-common:1.0
+FROM anduin/anduin-common:1.3
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV KEYCLOAK_VERSION 3.4.1.Final

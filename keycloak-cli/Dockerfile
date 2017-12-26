@@ -1,5 +1,3 @@
-## -*- docker-image-name: "anduin/keycloak-cli:1.0" -*-
-
 FROM anduin/anduin-common:1.0
 MAINTAINER ductamnguyen@anduintransact.com
 
