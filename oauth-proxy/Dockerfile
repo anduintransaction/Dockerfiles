@@ -3,6 +3,8 @@ MAINTAINER ductamnguyen@anduintransact.com
 
 ENV OAUTH_PROXY_VERSION 0.4.0
 
+RUN apt-get update && apt-get install -y wget && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN wget --quiet https://github.com/anduintransaction/oauth-proxy/releases/download/${OAUTH_PROXY_VERSION}/oauth-proxy-${OAUTH_PROXY_VERSION}-linux-amd64.tar.gz && \
     tar xvzf oauth-proxy-${OAUTH_PROXY_VERSION}-linux-amd64.tar.gz && \
     mv oauth-proxy /opt && \
