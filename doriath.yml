@@ -1,8 +1,29 @@
 root_dir: .
 build:
+  - name: phusion/baseimage
+    tag: 0.9.22
+    from: provided
+
+  - name: ubuntu
+    tag: 16.04
+    from: provided
+
+  - name: golang
+    tag: 1.9
+    from: provided
+
+  - name: postgres
+    tag: 9.6
+    from: provided
+
+  - name: debian
+    tag: stable
+    from: provided
+
   - name: anduin/anduin-common
     tag: 1.3
     from: ./anduin-common
+    depend: phusion/baseimage
 
   - name: anduin/anduin-app-common
     tag: 1.4
@@ -23,6 +44,100 @@ build:
     tag: 1.9
     from: ./keycloak
     depend: anduin/anduin-common
+
+  - name: anduin/confluent-base
+    tag: 1.0
+    from: ./confluent/base
+    depend: anduin/anduin-common
+
+  - name: anduin/confluent-standalone
+    tag: 1.0
+    from: ./confluent/standalone
+    depend: anduin/confluent-base
+
+  - name: anduin/confluent-kafka
+    tag: 1.0
+    from: ./confluent/kafka
+    depend: anduin/confluent-base
+
+  - name: anduin/confluent-zookeeper
+    tag: 1.0
+    from: ./confluent/zookeeper
+    depend: anduin/confluent-base
+
+  - name: anduin/confluent-rest
+    tag: 1.0
+    from: ./confluent/rest
+    depend: anduin/confluent-base
+
+  - name: anduin/consul
+    tag: 0.8.3
+    from: ./consul
+    depend: ubuntu
+
+  - name: anduin/couchbase
+    tag: 5.0.1
+    from: ./couchbase
+    depend: phusion/baseimage
+
+  - name: anduin/couchbase-cli
+    tag: 5.0.1
+    from: ./couchbase-cli
+    depend: anduin/couchbase
+
+  - name: anduin/couchbase-s3backup
+    tag: 1.3
+    from: ./couchbase-s3backup
+    depend: anduin/couchbase
+
+  - name: anduin/golang-with-vault
+    tag: 1.9
+    from: ./golang-with-vault
+    depend: golang
+
+  - name: anduin/ntp
+    tag: 1.1
+    from: ./ntp
+    depend: ubuntu
+
+  - name: anduin/ntp-cron
+    tag: 1.0
+    from: ./ntp
+    depend: ubuntu
+
+  - name: anduin/postgres-s3backup
+    tag: 1.1
+    from: ./postgres-s3backup
+    depend: postgres
+
+  - name: anduin/postgres-wait
+    tag: 1.3
+    from: ./postgres-wait
+    depend: postgres
+
+  - name: anduin/postgres-with-vault
+    tag: 9.6
+    from: ./postgres-with-vault
+    depend: postgres
+
+  - name: anduin/sidecar-common
+    tag: 1.2
+    from: ./sidecar-common
+    depend: ubuntu
+
+  - name: anduin/sync-gateway
+    tag: 1.1
+    from: ./sync-gateway
+    depend: ubuntu
+
+  - name: anduin/sync-gateway-health-check
+    tag: 1.0
+    from: ./sync-gateway-health-check
+
+  - name: anduin/vault-kube
+    tag: 1.0
+    from: ./vault-kube
+    depend: debian
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
