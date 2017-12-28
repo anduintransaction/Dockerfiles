@@ -1,4 +1,4 @@
-FROM couchbase:community-5.0.0
+FROM anduin/couchbase:5.0.1
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV VAULT_VERSION=0.8.3

@@ -1,21 +1,32 @@
-# based on https://github.com/arun-gupta/docker-images/tree/master/couchbase-server
+FROM phusion/baseimage:0.9.22
+MAINTAINER ductamnguyen@anduintransact.com
 
-FROM anduin/couchbase_server:4.5.1
-MAINTAINER Binh Nguyen "binhnguyen@anduintransact.com"
+RUN apt-get update && \
+    apt-get install -yq runit wget python-httplib2 chrpath \
+    lsof lshw sysstat net-tools numactl  && \
+    apt-get autoremove && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get update -y \
-  && apt-get install -y --no-install-recommends \
-    build-essential git rebar software-properties-common \
-    python-software-properties supervisor
-    
-##### supervisor
-# Configure
-RUN rm -rf /etc/supervisor
-ADD ./config/supervisord /etc/supervisor
+ARG CB_VERSION=5.0.1
+ARG CB_RELEASE_URL=http://packages.couchbase.com/releases
+ARG CB_PACKAGE=couchbase-server-community_5.0.1-ubuntu16.04_amd64.deb
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ENV PATH=$PATH:/opt/couchbase/bin:/opt/couchbase/bin/tools:/opt/couchbase/bin/install
 
-COPY configure-node.sh /opt/anduin/couchbase/
+RUN groupadd -g 1000 couchbase && useradd couchbase -u 1000 -g couchbase -M
 
-CMD exec /opt/anduin/couchbase/configure-node.sh
+RUN wget -N $CB_RELEASE_URL/$CB_VERSION/$CB_PACKAGE && \
+    dpkg -i ./$CB_PACKAGE && rm -f ./$CB_PACKAGE
+
+COPY scripts/run-couchbase.sh /etc/service/couchbase-server/run
+COPY scripts/dummy.sh /usr/local/bin/
+RUN ln -s dummy.sh /usr/local/bin/iptables-save && \
+    ln -s dummy.sh /usr/local/bin/lvdisplay && \
+    ln -s dummy.sh /usr/local/bin/vgdisplay && \
+    ln -s dummy.sh /usr/local/bin/pvdisplay
+RUN chrpath -r '$ORIGIN/../lib' /opt/couchbase/bin/curl
+
+EXPOSE 8091 8092 8093 8094 11207 11210 11211 18091 18092 18093 18094
+VOLUME /opt/couchbase/var
+
+CMD ["/sbin/my_init"]
