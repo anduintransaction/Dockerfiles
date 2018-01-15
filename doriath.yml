@@ -143,6 +143,47 @@ build:
     tag: 2.0.5.0
     from: ./oauth-proxy
     depend: phusion/baseimage
+
+  - name: anduin/elasticsearch
+    tag: 6.1.1
+    from: ./elk/elasticsearch
+    depend: anduin/anduin-common
+
+  - name: anduin/filebeat
+    tag: 6.1.1
+    from: ./elk/filebeat
+    depend: phusion/baseimage
+
+  - name: anduin/logstash
+    tag: 6.1.1
+    from: ./elk/logstash
+    depend: anduin/anduin-common
+
+  - name: anduin/flink-base
+    tag: 1.4.0
+    from: ./flink/flink-base
+    depend: anduin/anduin-common
+
+  - name: anduin/flink-local
+    tag: 1.4.0
+    from: ./flink/flink-local
+    depend: anduin/flink-base
+
+  - name: anduin/flink-jobmanager
+    tag: 1.4.0
+    from: ./flink/flink-jobmanager
+    depend: anduin/flink-base
+
+  - name: anduin/flink-taskmanager
+    tag: 1.4.0
+    from: ./flink/flink-taskmanager
+    depend: anduin/flink-base
+
+  - name: anduin/flink-historyserver
+    tag: 1.4.0
+    from: ./flink/flink-historyserver
+    depend: anduin/flink-base
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
