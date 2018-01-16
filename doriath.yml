@@ -41,7 +41,7 @@ build:
     depend: anduin/anduin-app-common
 
   - name: anduin/keycloak
-    tag: 1.9
+    tag: 3.4.3
     from: ./keycloak
     depend: anduin/anduin-common
 
