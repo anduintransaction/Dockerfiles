@@ -1,7 +1,7 @@
 FROM anduin/anduin-common:1.3
 MAINTAINER ductamnguyen@anduintransact.com
 
-ARG LOGSTASH_VERSION=6.1.1
+ARG LOGSTASH_VERSION=6.1.3
 
 RUN wget https://artifacts.elastic.co/downloads/logstash/logstash-${LOGSTASH_VERSION}.tar.gz && \
     wget https://artifacts.elastic.co/downloads/logstash/logstash-${LOGSTASH_VERSION}.tar.gz.sha512 && \

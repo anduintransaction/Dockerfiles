@@ -1,7 +1,7 @@
 FROM phusion/baseimage:0.9.22
 MAINTAINER ductamnguyen@anduintransact.com
 
-ARG FILEBEAT_VERSION=6.1.1
+ARG FILEBEAT_VERSION=6.1.3
 
 RUN apt-get -q update && apt-get -qy install wget && \
     apt-get -qy autoremove && apt-get clean && rm -r /var/lib/apt/lists/* && \

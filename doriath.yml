@@ -145,17 +145,17 @@ build:
     depend: phusion/baseimage
 
   - name: anduin/elasticsearch
-    tag: 6.1.1
+    tag: 6.1.3
     from: ./elk/elasticsearch
     depend: anduin/anduin-common
 
   - name: anduin/filebeat
-    tag: 6.1.1
+    tag: 6.1.3
     from: ./elk/filebeat
     depend: phusion/baseimage
 
   - name: anduin/logstash
-    tag: 6.1.1
+    tag: 6.1.3
     from: ./elk/logstash
     depend: anduin/anduin-common
 

@@ -1,7 +1,7 @@
 FROM anduin/anduin-common:1.3
 MAINTAINER ductamnguyen@anduintransact.com
 
-ARG ELASTICSEARCH_VERSION=6.1.1
+ARG ELASTICSEARCH_VERSION=6.1.3
 
 RUN wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz && \
     wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.tar.gz.sha512 && \
