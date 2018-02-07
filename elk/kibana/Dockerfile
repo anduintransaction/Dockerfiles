@@ -1,25 +1,25 @@
-FROM anduin/consul-template-supervisor:1.1
+FROM phusion/baseimage:0.9.22
 
 MAINTAINER ductamnguyen@anduintransact.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV KIBANA_VERSION 4.6.1
-ENV CONSUL_APP_CONFIG /opt/kibana/config/kibana.yml
+ARG KIBANA_VERSION=6.1.3
+ARG LOGTRAIL_VERSION=0.1.25
 
-# Kibana
-RUN wget --quiet https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
-    tar xvzf kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
+RUN apt-get -q update && apt-get -qy install wget && \
+    apt-get -qy autoremove && apt-get clean && rm -r /var/lib/apt/lists/* && \
+    wget --quiet https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
+    wget --quiet https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz.sha512 && \
+    sha512sum -c kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz.sha512 && \
+    tar xzf kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
     mv kibana-${KIBANA_VERSION}-linux-x86_64 /opt/kibana && \
-    rm -rf kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz
+    rm -rf kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz.sha512 && \
+    /opt/kibana/bin/kibana-plugin install https://github.com/sivasamyk/logtrail/releases/download/v${LOGTRAIL_VERSION}/logtrail-${KIBANA_VERSION}-${LOGTRAIL_VERSION}.zip
 
-# Logtrail
-RUN /opt/kibana/bin/kibana plugin -i logtrail -u https://github.com/anduintransaction/logtrail/releases/download/0.1.4-anduin-1/logtrail-0.1.4-anduin-1.tar.gz
+ADD ./configs/kibana.yml /opt/kibana/config/kibana.yml
+ADD ./configs/logtrail.json /opt/kibana/plugins/logtrail/logtrail.json
+ADD ./run-kibana.sh /etc/service/kibana/run
 
-RUN apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+EXPOSE 5601
 
-ADD supervisord.conf /etc/supervisord.conf
-ADD run-consul.sh /opt
-
-CMD /opt/run-consul.sh
+CMD ["/sbin/my_init"]

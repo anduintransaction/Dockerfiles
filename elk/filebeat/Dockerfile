@@ -1,21 +1,18 @@
-FROM anduin/consul-template-supervisor:1.1
-
+FROM phusion/baseimage:0.9.22
 MAINTAINER ductamnguyen@anduintransact.com
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV FILEBEAT_VERSION 1.3.1
-ENV CONSUL_APP_CONFIG /opt/filebeat.yml
+ARG FILEBEAT_VERSION=6.1.3
 
-# Filebeat
-RUN wget --quiet https://download.elastic.co/beats/filebeat/filebeat-${FILEBEAT_VERSION}-x86_64.tar.gz && \
-    tar xvzf filebeat-${FILEBEAT_VERSION}-x86_64.tar.gz && \
-    mv filebeat-${FILEBEAT_VERSION}-x86_64/filebeat /opt && \
-    rm -rf filebeat-${FILEBEAT_VERSION}-x86_64*
+RUN apt-get -q update && apt-get -qy install wget && \
+    apt-get -qy autoremove && apt-get clean && rm -r /var/lib/apt/lists/* && \
+    wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz && \
+    wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz.sha512 && \
+    sha512sum -c filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz.sha512 && \
+    tar -xzf filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz && \
+    mv filebeat-${FILEBEAT_VERSION}-linux-x86_64 /opt/filebeat && \
+    rm filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz*
 
-RUN apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ADD run-filebeat.sh /etc/service/filebeat/run
+ADD default-filebeat.yml /opt/filebeat/default-filebeat.yml
 
-ADD supervisord.conf /etc/supervisord.conf
-
-CMD /run.sh
+CMD ["/sbin/my_init"]
