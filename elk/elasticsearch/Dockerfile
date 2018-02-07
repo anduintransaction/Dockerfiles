@@ -15,6 +15,6 @@ COPY config /opt/config
 COPY run-elasticsearch.sh /etc/service/elasticsearch/run
 
 VOLUME /opt/es-data
-EXPOSE 9200
+EXPOSE 9200 9300
 
 CMD ["/sbin/my_init"]
