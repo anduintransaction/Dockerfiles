@@ -1,4 +1,4 @@
 Dockerfiles
 ===========
 
-Public Docker files for Anduin Transaction Inc.
+Public Docker files for Anduin Transaction Inc
