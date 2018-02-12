@@ -40,6 +40,11 @@ build:
     from: ./anduin-deployment
     depend: anduin/anduin-app-common
 
+  - name: anduin/sidecar-common
+    tag: 1.2
+    from: ./sidecar-common
+    depend: ubuntu
+
   - name: anduin/keycloak
     tag: 3.4.3
     from: ./keycloak
