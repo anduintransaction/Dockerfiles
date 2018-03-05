@@ -18,6 +18,13 @@ function checkAllEnv {
         checkEnv COUCHBASE_PASSWORD
 }
 
+function tryRemoveS3Bucket {
+    s3Bucket=$1
+    if aws s3 ls $s3Bucket; then
+        aws s3 rm --recursive $s3Bucket
+    fi
+}
+
 function doBackup {
     if [ $# -lt 1 ]; then
         echo "USAGE: $0 backup [s3 bucket]"
@@ -33,6 +40,24 @@ function doBackup {
         /opt/couchbase/bin/cbbackup http://$COUCHBASE_HOST $localFolder -u $COUCHBASE_USERNAME -p $COUCHBASE_PASSWORD -m accu &&
         echo "Back up at $now for $COUCHBASE_HOST" >> $localFolder/daily-backup-info.txt &&
         aws s3 sync $localFolder s3://$s3Bucket &&
+        echo "Done"
+}
+
+function doFullBackup {
+    if [ $# -lt 1 ]; then
+        echo "USAGE: $0 full-backup [s3 bucket]"
+        exit 1
+    fi
+    s3Bucket=$1
+    echo "Do full backup to $s3Bucket"
+    now=`date`
+    localFolder=/tmp/backup
+    rm -rf $localFolder &&
+        mkdir -p $localFolder &&
+        /opt/couchbase/bin/cbbackup http://$COUCHBASE_HOST $localFolder -u $COUCHBASE_USERNAME -p $COUCHBASE_PASSWORD &&
+        echo "Back up at $now for $COUCHBASE_HOST" >> $localFolder/daily-backup-info.txt &&
+        tryRemoveS3Bucket s3://$s3Bucket &&
+        aws s3 cp --recursive $localFolder $s3Bucket &&
         echo "Done"
 }
 
@@ -61,7 +86,7 @@ function doRestore {
 }
 
 function showHelp {
-    echo "USAGE: $0 backup|restore"
+    echo "USAGE: $0 backup|full-backup|restore"
 }
 
 checkAllEnv
@@ -84,6 +109,9 @@ echo "Using COUCHBASE_PASSWORD=${COUCHBASE_PASSWORD:0:4}****"
 case $cmd in
     backup)
         doBackup $@
+        ;;
+    full-backup)
+        doFullBackup $@
         ;;
     restore)
         doRestore $@
