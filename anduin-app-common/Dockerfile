@@ -1,6 +1,9 @@
 FROM anduin/anduin-common:1.3
 MAINTAINER ductamnguyen@anduintransact.com
 
+# NodeJS
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && apt-get install -y nodejs
+
 # Libreoffice
 RUN apt-get install python-software-properties && apt-add-repository -y ppa:libreoffice/ppa && apt-get update && apt-get install -y unoconv
 
@@ -11,7 +14,7 @@ RUN echo "deb http://us-west-2.ec2.archive.ubuntu.com/ubuntu/ trusty multiverse"
     echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections && \
     apt-get update && apt-get install -y ttf-mscorefonts-installer
 
-RUN wget 'http://download.microsoft.com/download/f/5/a/f5a3df76-d856-4a61-a6bd-722f52a5be26/PowerPointViewer.exe' && \
+RUN wget 'https://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-27C9F8C8F696/PowerPointViewer.exe' && \
     cabextract -L -F ppviewer.cab -d . PowerPointViewer.exe && \
     mkdir /usr/share/fonts/vista && \
     cabextract -L -F '*.TT[FC]' -d /usr/share/fonts/vista ppviewer.cab && \
@@ -20,6 +23,9 @@ RUN wget 'http://download.microsoft.com/download/f/5/a/f5a3df76-d856-4a61-a6bd-7
 
 ADD fonts/* /usr/share/fonts/truetype/msttcorefonts/
 RUN fc-cache -f
+
+# Carbone CLI
+RUN npm install -g carbone-cli@1.0.1
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -1,15 +1,7 @@
-FROM anduin/anduin-app-common:1.4
+FROM anduin/anduin-app-common:1.5
 MAINTAINER ductamnguyen@anduintransact.com
 
 RUN groupadd -r anduin && useradd -g anduin anduin
-
-# Nodejs
-ENV NODE_VERSION v6.10.0
-RUN apt-get update && apt-get install xz-utils && \
-    wget https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
-    tar -xJf node-${NODE_VERSION}-linux-x64.tar.xz -C /usr/local --strip-components=1 && \
-    rm node-${NODE_VERSION}-linux-x64.tar.xz && \
-    ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 # Ruby
 RUN apt-get install -y curl patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
