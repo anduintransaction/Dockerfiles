@@ -27,5 +27,12 @@ RUN fc-cache -f
 # Carbone CLI
 RUN npm install -g carbone-cli@1.0.1
 
+# wkhtmltopdf
+RUN apt-get install -y xz-utils && \
+    wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz && \
+    tar xf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz && \
+    cp /wkhtmltox/bin/* /usr/local/bin && \
+    rm -rf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz wkhtmltox
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
