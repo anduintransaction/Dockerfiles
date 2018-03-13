@@ -24,8 +24,8 @@ RUN wget 'https://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-
 ADD fonts/* /usr/share/fonts/truetype/msttcorefonts/
 RUN fc-cache -f
 
-# Carbone CLI
-RUN npm install -g carbone-cli@1.0.1
+# Docx Templater
+RUN npm install -g jszip@2 docxtemplater
 
 # wkhtmltopdf
 RUN apt-get install -y xz-utils && \

@@ -26,17 +26,17 @@ build:
     depend: phusion/baseimage
 
   - name: anduin/anduin-app-common
-    tag: 1.6
+    tag: 1.7
     from: ./anduin-app-common
     depend: anduin/anduin-common
 
   - name: anduin/anduin-build
-    tag: 1.5.2
+    tag: 1.5.3
     from: ./anduin-build
     depend: anduin/anduin-app-common
 
   - name: anduin/anduin-deployment
-    tag: 1.5.2
+    tag: 1.5.3
     from: ./anduin-deployment
     depend: anduin/anduin-app-common
 
