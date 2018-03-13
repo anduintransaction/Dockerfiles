@@ -1,4 +1,4 @@
-FROM anduin/anduin-app-common:1.6
+FROM anduin/anduin-app-common:1.7
 MAINTAINER ductamnguyen@anduintransact.com
 
 RUN groupadd -r anduin && useradd -g anduin anduin
