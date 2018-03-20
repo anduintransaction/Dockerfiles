@@ -86,7 +86,7 @@ build:
     depend: phusion/baseimage
 
   - name: anduin/couchbase-cli
-    tag: 5.0.1
+    tag: 5.0.1.1
     from: ./couchbase-cli
     depend: anduin/couchbase
 
