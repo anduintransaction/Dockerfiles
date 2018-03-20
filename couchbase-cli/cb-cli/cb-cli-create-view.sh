@@ -19,6 +19,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Creating view $viewName in $bucketName"
+curl -X DELETE -sS -u $COUCHBASE_USERNAME:$COUCHBASE_PASSWORD $COUCHBASE_HOST:8092/$bucketName/_design/$viewName
 for i in `seq 1 10`; do
     resp=`curl -v -sS -X PUT -u $COUCHBASE_USERNAME:$COUCHBASE_PASSWORD -H "Content-Type: application/json" -d "$viewContent" $COUCHBASE_HOST:8092/$bucketName/_design/$viewName 2>&1`
     if echo "$resp" | grep -q '"ok":true'; then
