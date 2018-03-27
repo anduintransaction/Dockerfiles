@@ -1,0 +1,12 @@
+logging:
+  level: DEBUG
+  output: stdout
+database:
+  driver: "postgres"
+  connection_string: "host=${POSTGRES_HOST} user=${POSTGRES_USER} dbname=${POSTGRES_DB} password=${POSTGRES_PASSWORD} sslmode=disable"
+admin:
+  listen_address: ":8000"
+mailgun:
+  listen_address: ":8001"
+smtp_server:
+  listen_address: ":8025"

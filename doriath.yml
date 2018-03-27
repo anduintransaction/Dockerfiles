@@ -194,6 +194,11 @@ build:
     from: ./flink/flink-historyserver
     depend: anduin/flink-base
 
+  - name: anduin/raven
+    tag: 1.0.0
+    from: ./raven
+    depend: ubuntu
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
