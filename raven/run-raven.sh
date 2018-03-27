@@ -5,4 +5,5 @@ export POSTGRES_USER=${POSTGRES_USER:-raven}
 export POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-raven}
 export POSTGRES_DB=${POSTGRES_DB:-raven}
 
-exec /opt/raven/raven run /opt/raven.yml --ui-data=/opt/raven/frontend
+/opt/raven/raven initdb /opt/raven.yml &&
+    exec /opt/raven/raven run /opt/raven.yml --ui-data=/opt/raven/frontend
