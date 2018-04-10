@@ -25,7 +25,7 @@ ADD fonts/* /usr/share/fonts/truetype/msttcorefonts/
 RUN fc-cache -f
 
 # Docx Templater
-RUN npm install -g jszip@2 docxtemplater
+RUN npm install -g jszip@2 docxtemplater-cli
 
 # wkhtmltopdf
 RUN apt-get install -y xz-utils && \
