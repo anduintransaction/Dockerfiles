@@ -199,6 +199,12 @@ build:
     from: ./raven
     depend: ubuntu
 
+  - name: anduin/izanami
+    tag: 1.0.0
+    from: ./izanami
+    depend: anduin/anduin-common
+
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
