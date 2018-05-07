@@ -20,6 +20,10 @@ build:
     tag: stable
     from: provided
 
+  - name: redis
+    tag: 4.0.9
+    from: provided
+
   - name: anduin/anduin-common
     tag: 1.3
     from: ./anduin-common
@@ -204,6 +208,10 @@ build:
     from: ./izanami
     depend: anduin/anduin-common
 
+  - name: anduin/redis-s3backup
+    tag: 1.0.0
+    from: ./redis-s3backup
+    depend: redis
 
 credentials:
   - name: dockerhub
