@@ -213,6 +213,11 @@ build:
     from: ./redis-s3backup
     depend: redis
 
+  - name: anduin/redis-wait
+    tag: 1.0.0
+    from: ./redis-wait
+    depend: redis
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
