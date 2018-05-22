@@ -218,6 +218,11 @@ build:
     from: ./redis-wait
     depend: redis
 
+  - name: anduin/sentry
+    tag: 8.22.0
+    from: ./sentry
+    depend: phusion/baseimage
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
