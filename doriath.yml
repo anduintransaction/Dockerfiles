@@ -223,6 +223,11 @@ build:
     from: ./sentry
     depend: phusion/baseimage
 
+  - name: anduin/nexus
+    tag: 3.12.0
+    from: ./nexus
+    depend: phusion/baseimage
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
