@@ -228,6 +228,11 @@ build:
     from: ./nexus
     depend: phusion/baseimage
 
+  - name: anduin/wait
+    tag: 1.0.0
+    from: ./wait
+    depend: ubuntu
+
 credentials:
   - name: dockerhub
     username: ${DOCKERHUB_USERNAME}
